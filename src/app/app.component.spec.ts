@@ -20,12 +20,12 @@ describe('AppComponent', () => {
   });
 
   it(`should have the 'energy-co-op-ui' title`, () => {
-    expect(app.title).toEqual('energy-co-op-ui');
+    expect(app.title).toEqual('Energy Co-op UI');
   });
 
   it('should render title', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, energy-co-op-ui');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Energy Co-op UI');
   });
 });
