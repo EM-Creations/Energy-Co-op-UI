@@ -36,8 +36,12 @@
 
 section#left-nav {
   display: flex;
-  flex-grow: 1;
+  height: 100%;
   padding-left: 0;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 p {
@@ -95,9 +99,15 @@ p {
 
 .social-links {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 0.73rem;
-  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.social-links > a {
+  display: flex;
+  width: 2.5rem;
 }
 
 .social-links path {
