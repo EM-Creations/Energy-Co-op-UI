@@ -7,13 +7,23 @@
     "start:server": "npm start",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "jest --coverage",
+    "test": "jest --ci --reporters=default --reporters=jest-junit",
     "e2e": "npx playwright test --ui",
     "e2e:headless": "npx playwright test",
     "e2e:ci": "start-test start:server http-get://localhost:4200 e2e:headless",
     "serve:ssr:energy-co-op-ui": "node dist/energy-co-op-ui/server/server.mjs"
   },
   "private": true,
+  "jest-junit": {
+    "suiteName": "jest unit tests",
+    "outputDirectory": "./reports",
+    "outputName": "jest.xml",
+    "uniqueOutputName": "false",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true"
+  },
   "dependencies": {
     "@angular/common": "^19.2.5",
     "@angular/compiler": "^19.2.5",
@@ -47,6 +57,7 @@
     "blob-polyfill": "^9.0.20240710",
     "eslint-plugin-jest": "^28.11.0",
     "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
     "jest-preset-angular": "^14.5.4",
     "start-server-and-test": "^2.0.11",
     "ts-jest": "^29.3.1",

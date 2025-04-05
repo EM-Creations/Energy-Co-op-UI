@@ -41,6 +41,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Jest
+reports/
+
 # Playwright
 node_modules/
 /test-results/
