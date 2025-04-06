@@ -11,6 +11,7 @@ jobs:
         uses: fast-facts/ng-update@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          base-branch: "main"
           pr-title: "chore(ng-update): Framework Update"
           pr-assignees: "@EM-Creations"
           pr-reviewers: "@EM-Creations"
