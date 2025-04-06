@@ -20,8 +20,4 @@ describe('AppComponent', () => {
   it('should create the app', () => {
     expect(app).toBeTruthy();
   });
-
-  it(`should have the 'energy-co-op-ui' title`, () => {
-    expect(app.title).toEqual('Energy Co-op UI');
-  });
 });

@@ -9,6 +9,4 @@ import {LeftNavComponent} from './left-nav/left-nav/left-nav.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  title = 'Energy Co-op UI';
-}
+export class AppComponent {}

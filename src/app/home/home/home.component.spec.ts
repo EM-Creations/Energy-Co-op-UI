@@ -20,4 +20,8 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('title should be set.', () => {
+    expect(component.title).toEqual('Energy Co-op UI');
+  });
 });
