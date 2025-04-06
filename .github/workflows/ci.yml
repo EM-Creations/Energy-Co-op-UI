@@ -1,5 +1,5 @@
-name: CI TestFX Build
-run-name: CI TestFX build by ${{ github.actor }} 🚀
+name: CI Build
+run-name: CI build by ${{ github.actor }} 🚀
 on:
   push:
     branches: [ "main" ]
