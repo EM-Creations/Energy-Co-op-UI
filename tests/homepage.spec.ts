@@ -28,6 +28,20 @@ test.describe('Header', () => {
 
     await expect(title).toHaveCSS('background-color', 'rgb(12, 125, 157)');
   });
+
+  test('to have pointer cursor', async ({ page }) => {
+    const title = page.locator('section#header>div');
+
+    await expect(title).toHaveCSS('cursor', 'pointer');
+  });
+
+  test('link to home to work', async ({ page }) => {
+    const title = page.locator('section#header>div');
+
+    await title.click();
+
+    expect(page.url()).toContain('/');
+  });
 });
 
 test.describe('Nav Bar', () => {
@@ -37,22 +51,36 @@ test.describe('Nav Bar', () => {
     await expect(navbar).toBeVisible();
   });
 
-  test('to have "Your Projects" link', async ({ page }) => {
-    const link = page.locator('span', { hasText: "Your Projects" });
+  test.describe('Your Projects link', () => {
+    test('to exist', async ({ page }) => {
+      const link = page.locator('span', { hasText: "Your Projects" });
 
-    await expect(link).toBeVisible();
+      await expect(link).toBeVisible();
+    });
+
+    test('to work', async ({ page }) => {
+      const link = page.locator('span', { hasText: "Your Projects" });
+
+      await link.click();
+
+      expect(page.url()).toContain('/projects');
+    });
   });
 
-  test('to have "Your Documents" link', async ({ page }) => {
-    const link = page.locator('span', { hasText: "Your Documents" });
+  test.describe('Your Documents link', () => {
+    test('to exist', async ({ page }) => {
+      const link = page.locator('span', { hasText: "Your Documents" });
 
-    await expect(link).toBeVisible();
+      await expect(link).toBeVisible();
+    });
   });
 
-  test('to have "Logout" link', async ({ page }) => {
-    const link = page.locator('span', { hasText: "Logout" });
+  test.describe('Logout link', () => {
+    test('to exist', async ({page}) => {
+      const link = page.locator('span', {hasText: "Logout"});
 
-    await expect(link).toBeVisible();
+      await expect(link).toBeVisible();
+    });
   });
 });
 
