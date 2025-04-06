@@ -1,6 +1,7 @@
 /* Copyright (C) 2025 Edward McKnight - All Rights Reserved */
-import { ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
+import {provideRouter} from '@angular/router';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -9,6 +10,7 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [provideRouter([])]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
@@ -21,11 +23,5 @@ describe('AppComponent', () => {
 
   it(`should have the 'energy-co-op-ui' title`, () => {
     expect(app.title).toEqual('Energy Co-op UI');
-  });
-
-  it('should render title', () => {
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Energy Co-op UI');
   });
 });

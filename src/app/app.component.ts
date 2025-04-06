@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
 import {HeaderComponent} from './header/header/header.component';
 import {LeftNavComponent} from './left-nav/left-nav/left-nav.component';
 

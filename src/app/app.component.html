@@ -1,14 +1,10 @@
 <main class="main">
   <app-header></app-header>
-  <div class="content">
+  <section id="content">
     <app-left-nav></app-left-nav>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <section class="right-side">
-      <h1>{{ title }}</h1>
-      <p>Welcome to your Energy Co-op User Interface.</p>
-      <p> Please select options on the left to navigate.</p>
+      <router-outlet />
     </section>
-  </div>
+  </section>
 </main>
-
-<router-outlet />
