@@ -55,7 +55,7 @@
     "@playwright/test": "^1.51.1",
     "@types/express": "^5.0.1",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.14.1",
     "angular-eslint": "19.3.0",
     "babel-loader": "^10.0.0",
     "babel-plugin-istanbul": "^7.0.0",
