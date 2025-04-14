@@ -13,5 +13,5 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           base-branch: "main"
           pr-title: "chore(ng-update): Framework Update"
-          pr-assignees: "@EM-Creations"
-          pr-reviewers: "@EM-Creations"
+          pr-assignees: "EM-Creations"
+          pr-reviewers: "EM-Creations"
