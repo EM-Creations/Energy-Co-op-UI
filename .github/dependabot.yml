@@ -7,5 +7,10 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "Dependabot: "
+    allow:
+      # Allow both direct and indirect updates for all packages.
+      - dependency-type: "all"
+    ignore:
+      - dependency-name: "@angular*"
     reviewers:
       - "EM-Creations"
