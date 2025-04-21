@@ -91,7 +91,17 @@ npm install -g @angular/cli
 4. Install dependencies and run the application
 ```bash
 npm ci
+```
+```bash
 npm run start
+```
+5. Install Playwright
+```bash
+npx playwright install
+```
+6. Build and run all tests
+```bash
+npm run pre-push-check
 ```
 
 ## Development server
