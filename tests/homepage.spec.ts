@@ -51,33 +51,25 @@ test.describe('Nav Bar', () => {
     await expect(navbar).toBeVisible();
   });
 
-  test.describe('Your Projects link', () => {
+  test.describe('Graig Fatha link', () => {
     test('to exist', async ({ page }) => {
-      const link = page.locator('span', { hasText: "Your Projects" });
+      const link = page.locator('span', { hasText: "Graig Fatha" });
 
       await expect(link).toBeVisible();
     });
 
     test('to work', async ({ page }) => {
-      const link = page.locator('span', { hasText: "Your Projects" });
+      const link = page.locator('span', { hasText: "Graig Fatha" });
 
       await link.click();
 
-      expect(page.url()).toContain('/projects');
+      expect(page.url()).toContain('/stats/Graig%20Fatha');
     });
   });
 
-  test.describe('Your Documents link', () => {
+  test.describe('Documents link', () => {
     test('to exist', async ({ page }) => {
-      const link = page.locator('span', { hasText: "Your Documents" });
-
-      await expect(link).toBeVisible();
-    });
-  });
-
-  test.describe('Logout link', () => {
-    test('to exist', async ({page}) => {
-      const link = page.locator('span', {hasText: "Logout"});
+      const link = page.locator('span', { hasText: "Documents" });
 
       await expect(link).toBeVisible();
     });

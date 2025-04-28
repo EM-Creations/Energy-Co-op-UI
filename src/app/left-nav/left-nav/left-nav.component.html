@@ -2,11 +2,11 @@
   <div class="pill-group">
       <a
         class="pill"
-        routerLink="/projects"
+        [routerLink]="['/stats', 'Graig Fatha']"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
       >
-        <span>Your Projects</span>
+        <span>Graig Fatha</span>
       </a>
 
       <a
@@ -15,16 +15,7 @@
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
       >
-        <span>Your Documents</span>
-      </a>
-
-      <a
-        class="pill"
-        routerLink="/logout"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-      >
-        <span>Logout</span>
+        <span>Documents</span>
       </a>
   </div>
   <div class="social-links">
@@ -48,7 +39,7 @@
       </svg>
     </a>
     <a
-      href="mailto:coopemail@coop.com"
+      href="mailto:graigfathacoop@gmail.com"
       aria-label="Contact"
       target="_blank"
       rel="noopener"
