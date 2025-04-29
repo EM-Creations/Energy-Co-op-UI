@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {VensysDataResponse} from '../model/VensysDataResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export abstract class SiteDataService {
-  abstract getYesterdayGenerationWatts(): number;
+  abstract getTodayGenerationWatts(): Observable<VensysDataResponse>;
 }

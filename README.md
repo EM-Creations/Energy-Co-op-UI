@@ -7,7 +7,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/EM-Creations/Energy-Co-op-UI">
-    <img src="https://github.com/EM-Creations/Energy-Co-op-UI" alt="Logo" width="180" height="80">
+    <img src="https://www.windcoop.co.uk/wp-content/uploads/go-x/u/14699fc7-4639-4665-9c87-1dbd1f1ef1af/image-160x160.png" alt="Logo" width="160" height="160">
   </a>
 
 <h3 align="center">Energy Co-op UI</h3>
@@ -57,7 +57,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Energy Co-op UI Screen Shot](https://github.com/EM-Creations/Energy-Co-op-UI)](https://github.com/EM-Creations/Energy-Co-op-UI)
+[![Energy Co-op UI Screen Shot](https://github.com/EM-Creations/Energy-Co-op-UI/blob/main/public/demo.jpg)](https://github.com/EM-Creations/Energy-Co-op-UI)
 
 Energy Co-op UI is intended to be an Angular web application to facilitate the management of users accessing Energy Co-op information.
 
@@ -88,18 +88,19 @@ Energy Co-op UI is intended to be an Angular web application to facilitate the m
 npm install -g @angular/cli
 ```
 3. Clone a fork of this repository
-4. Install dependencies and run the application
+4. Copy the `src/environments/environment.ts` file to `src/environments/environment.development.ts` and update the values as needed.
+5. Install dependencies and run the application
 ```bash
 npm ci
 ```
 ```bash
-npm run start
+npm run start:dev
 ```
-5. Install Playwright
+6. Install Playwright
 ```bash
 npx playwright install
 ```
-6. Build and run all tests
+7. Build and run all tests
 ```bash
 npm run pre-push-check
 ```
@@ -109,7 +110,7 @@ npm run pre-push-check
 To start a local development server, run:
 
 ```bash
-ng serve
+npm run start:dev
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
@@ -153,8 +154,6 @@ For end-to-end (e2e) testing, run:
 ```bash
 ng e2e
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
 ## Additional Resources
 

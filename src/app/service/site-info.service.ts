@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {SiteInfo} from '../model/site-info';
-import {SiteDataService} from './site-data.service';
-import {GraigFathaSiteDataService} from './impl/graig-fatha-site-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,13 +38,5 @@ export class SiteInfoService {
     }
 
     return siteInfo;
-  }
-
-  getDataService(siteInfo: SiteInfo): SiteDataService {
-    if (siteInfo.name !== "Graig Fatha") {
-      console.log("Site data service not available for this site, reverting to Graig Fatha..");
-    }
-
-    return new GraigFathaSiteDataService;
   }
 }

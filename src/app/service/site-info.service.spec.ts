@@ -1,6 +1,5 @@
 import {TestBed} from '@angular/core/testing';
 import {SiteInfoService} from './site-info.service';
-import {GraigFathaSiteDataService} from './impl/graig-fatha-site-data.service';
 
 describe('SiteInfoService', () => {
   let service: SiteInfoService;
@@ -47,17 +46,5 @@ describe('SiteInfoService', () => {
     expect(siteInfo.name).toBe('Unknown Site');
     expect(siteInfo.description).toBe('No description available.');
     expect(siteInfo.mapURL).toBe('https://www.google.com/maps');
-  });
-
-  it('should return GraigFathaSiteDataService for "Graig Fatha" site', () => {
-    const siteInfo = service.getSiteInfoFromName('Graig Fatha');
-    const dataService = service.getDataService(siteInfo);
-    expect(dataService).toBeInstanceOf(GraigFathaSiteDataService);
-  });
-
-  it('should return GraigFathaSiteDataService for a non "Graig Fatha" site', () => {
-    const siteInfo = service.getSiteInfoFromName('Kirk Hill');
-    const dataService = service.getDataService(siteInfo);
-    expect(dataService).toBeInstanceOf(GraigFathaSiteDataService);
   });
 });
