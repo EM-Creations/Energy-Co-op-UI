@@ -6,8 +6,26 @@ test.beforeEach(async ({ page }) => {
 
 test.describe('Stats', () => {
   test('to exist', async ({ page }) => {
-    const content = page.locator('p');
+    const content = page.locator('section#stats');
 
     await expect(content).toBeVisible();
+  });
+
+  test('to have the correct colour font', async ({ page }) => {
+    const content = page.locator('section#stats>div');
+
+    await expect(content).toHaveCSS('color', 'rgb(255, 255, 255)');
+  });
+
+  test('to have the correct background colour', async ({ page }) => {
+    const content = page.locator('section#stats>div');
+
+    await expect(content).toHaveCSS('background-color', 'rgb(156, 188, 240)');
+  });
+
+  test('to have correct site name', async ({ page }) => {
+    const siteName = page.locator('section#stats>div>h1');
+
+    await expect(siteName).toHaveText('Graig Fatha');
   });
 });
