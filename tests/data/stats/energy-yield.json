@@ -1,0 +1,15 @@
+{
+  "code": 20000,
+  "success": true,
+  "data": {
+    "field": "EnergyYield",
+    "value": 9672,
+    "tid": 277,
+    "timestamp": "2025-05-04T21:40:00",
+    "twinCatVersion": 0
+  },
+  "message": "EnergyYield found",
+  "from": "2025-05-04T00:00:00",
+  "to": "2025-05-04T21:40:00",
+  "processTime": "00:00:00.0147375"
+}

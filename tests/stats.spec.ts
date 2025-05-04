@@ -4,8 +4,21 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/stats/Graig Fatha');
 });
 
+test.afterEach(async ({ page }) => {
+  await page.unrouteAll({ behavior: 'ignoreErrors' })
+});
+
 test.describe('Stats', () => {
   test('to exist', async ({ page }) => {
+    await page.route('*/**/Customer/MeanData/Show/EnergyYield', async route => {
+      const response = await route.fetch();
+      console.log(response.url());
+      const energyYieldJson = JSON.parse(JSON.stringify(require('./data/stats/energy-yield.json')));
+
+      await route.fulfill({ energyYieldJson });
+      await route.continue();
+    });
+
     const content = page.locator('section#stats');
 
     await expect(content).toBeVisible();
