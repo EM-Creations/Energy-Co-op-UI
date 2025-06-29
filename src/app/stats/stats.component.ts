@@ -14,14 +14,14 @@ import {VensysEnergyYield} from '../model/VensysEnergyYield';
   styleUrl: './stats.component.scss'
 })
 export class StatsComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   protected siteName: string | null = "";
   protected siteInfo?: SiteInfo;
   protected todayGenerationWatts = 0;
 
   private siteInfoService = inject(SiteInfoService);
   protected siteDataService : SiteDataService = inject(GraigFathaSiteDataService);
-
-  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.siteName = this.route.snapshot.paramMap.get('site');
