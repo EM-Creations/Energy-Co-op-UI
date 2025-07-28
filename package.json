@@ -48,7 +48,7 @@
     "@angular/build": "^20.1.0",
     "@angular/cli": "^20.1.0",
     "@angular/compiler-cli": "^20.1.0",
-    "@babel/core": "^7.26.10",
+    "@babel/core": "^7.28.0",
     "@babel/plugin-proposal-decorators": "^7.28.0",
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-typescript": "^7.27.0",
