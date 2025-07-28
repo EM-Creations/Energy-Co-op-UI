@@ -8,8 +8,8 @@ updates:
     commit-message:
       prefix: "Dependabot: "
     allow:
-      # Allow both direct and indirect updates for all packages.
-      - dependency-type: "all"
+      # Allow only direct updates for all packages.
+      - dependency-type: "direct"
     ignore:
       - dependency-name: "@angular*"
     reviewers:
