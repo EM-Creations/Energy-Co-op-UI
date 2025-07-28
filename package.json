@@ -53,7 +53,7 @@
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-typescript": "^7.27.0",
     "@jest/globals": "^30.0.2",
-    "@playwright/test": "^1.52.0",
+    "@playwright/test": "^1.54.1",
     "@types/express": "^5.0.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^24.0.7",
