@@ -52,7 +52,7 @@
     "@babel/plugin-proposal-decorators": "^7.28.0",
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-typescript": "^7.27.0",
-    "@jest/globals": "^30.0.2",
+    "@jest/globals": "^30.0.5",
     "@playwright/test": "^1.54.1",
     "@types/express": "^5.0.1",
     "@types/jest": "^29.5.14",
