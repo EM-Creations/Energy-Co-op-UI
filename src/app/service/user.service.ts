@@ -7,7 +7,7 @@ import {AuthService, User} from '@auth0/auth0-angular';
 })
 export class UserService {
   auth = inject(AuthService);
-  private accessToken: object | null = null;
+  private accessToken: any | null = null;
   private user: User | null | undefined = null;
 
   retrieveUser(): void {
@@ -35,7 +35,7 @@ export class UserService {
     }
   }
 
-  getAccessToken(): object | null {
+  getAccessToken(): any | null {
     if (!this.accessToken) {
       this.retrieveAccessToken();
     }
