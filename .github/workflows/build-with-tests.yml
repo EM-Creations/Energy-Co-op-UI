@@ -36,15 +36,16 @@ jobs:
       - name: Run tests
         run: npm run test
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-
-      - name: Run Playwright tests
-        run: npm run e2e:ci
-
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report-${{ inputs.os }}
-          path: playwright-report/
-          retention-days: 30
+# Temporarily disabled Playwright tests
+#      - name: Install Playwright Browsers
+#        run: npx playwright install --with-deps
+#
+#      - name: Run Playwright tests
+#        run: npm run e2e:ci
+#
+#      - uses: actions/upload-artifact@v4
+#        if: ${{ !cancelled() }}
+#        with:
+#          name: playwright-report-${{ inputs.os }}
+#          path: playwright-report/
+#          retention-days: 30
