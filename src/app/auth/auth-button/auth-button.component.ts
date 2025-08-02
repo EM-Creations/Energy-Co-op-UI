@@ -1,6 +1,7 @@
 import {Component, DOCUMENT, inject} from '@angular/core';
 import {AuthService} from '@auth0/auth0-angular';
 import {AsyncPipe} from '@angular/common';
+import {UserService} from '../../service/user.service';
 
 @Component({
   selector: 'app-auth-button',
@@ -13,5 +14,14 @@ import {AsyncPipe} from '@angular/common';
 export class AuthButtonComponent {
   document = inject<Document>(DOCUMENT);
   auth = inject(AuthService);
+  userService = inject(UserService);
+
+  handleLogin(): void {
+    this.auth.loginWithRedirect().subscribe(() => {
+        this.userService.retrieveUser();
+        this.userService.retrieveAccessToken();
+      }
+    )
+  }
 
 }

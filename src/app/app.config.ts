@@ -19,6 +19,8 @@ export const appConfig: ApplicationConfig = {
       domain: environment.auth0.domain,
       clientId: environment.auth0.clientId,
       authorizationParams: {
+        audience: environment.auth0.audience,
+        scope: environment.auth0.scope,
         redirect_uri: environment.auth0.redirectUri
       },
       errorPath: '/error'

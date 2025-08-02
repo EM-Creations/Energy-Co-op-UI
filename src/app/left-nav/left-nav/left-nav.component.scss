@@ -36,12 +36,19 @@
 
 section#left-nav {
   display: flex;
+  width: max-content;
   height: 100%;
   padding-left: 0;
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+}
+
+div.user-info > img {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
 }
 
 p {

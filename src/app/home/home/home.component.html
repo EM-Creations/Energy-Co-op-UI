@@ -4,9 +4,12 @@
 
 @let user = auth.user$ | async;
 @if (user) {
+  @let accessToken = userService.getAccessToken();
   <ul>
+    <img src="{{ user.picture }}" alt="User Picture" />
     <li>{{ user.name }}</li>
     <li>{{ user.email }}</li>
+    <li>{{ JSON.stringify(accessToken.permissions) }}</li>
   </ul>
 } @else {
   <p>You are not logged in.</p>

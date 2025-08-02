@@ -1,5 +1,15 @@
 <section id="left-nav">
+  @let user = auth.user$ | async;
+
+  @if (user) {
+    <div class="user-info">
+      <img src="{{ user.picture }}" alt="User Picture"/>
+    </div>
+  }
+
   <div class="pill-group">
+
+    @if (auth.isAuthenticated$ | async) {
       <a
         class="pill"
         [routerLink]="['/stats', 'Graig Fatha']"
@@ -17,6 +27,7 @@
       >
         <span>Documents</span>
       </a>
+    }
 
     <app-auth-button></app-auth-button>
   </div>
