@@ -1,0 +1,17 @@
+@if (auth.isAuthenticated$ | async) {
+  <button
+    class="pill"
+    (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })"
+    (keyup)="auth.logout({ logoutParams: { returnTo: document.location.origin } })"
+  >
+    <span>Logout</span>
+  </button>
+} @else {
+  <button
+    class="pill"
+    (click)="auth.loginWithRedirect()"
+    (keyup)="auth.loginWithRedirect()"
+  >
+    <span>Login</span>
+  </button>
+}
