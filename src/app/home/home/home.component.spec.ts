@@ -1,14 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HomeComponent} from './home.component';
+import {InjectionToken} from '@angular/core';
+import {AuthService} from '@auth0/auth0-angular';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  const AUTH0_CLIENT = new InjectionToken('auth0.client');
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomeComponent]
+      imports: [HomeComponent],
+      providers: [{ provide: AuthService, useValue: AUTH0_CLIENT }]
     })
     .compileComponents();
 
