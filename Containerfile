@@ -8,12 +8,9 @@ RUN mkdir /app/node_modules/.vite \
     && chown -R node:node /app/node_modules/.vite
 
 RUN chown -R node:node /app
-
-RUN pwd
+RUN chmod -R 755 /app
 
 USER node
-
-RUN whoami
 
 RUN ls -latr
 
