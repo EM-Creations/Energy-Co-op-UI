@@ -16,12 +16,12 @@ permissions:
   statuses: read
   security-events: write
 
-  env:
-    IMAGE_NAME: energycoop-ui
-    IMAGE_TAGS: v1 latest ${{ github.sha }}
-    IMAGE_REGISTRY: ghcr.io/${{ github.repository }}
-    REGISTRY_USER: ${{ github.actor }}
-    REGISTRY_PASSWORD: ${{ github.token }}
+env:
+  IMAGE_NAME: energycoop-ui
+  IMAGE_TAGS: v1 latest ${{ github.sha }}
+  IMAGE_REGISTRY: ghcr.io/${{ github.repository }}
+  REGISTRY_USER: ${{ github.actor }}
+  REGISTRY_PASSWORD: ${{ github.token }}
 
 jobs:
   Build-With-Tests-Windows:
