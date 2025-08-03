@@ -13,6 +13,8 @@ RUN pwd
 
 USER node
 
+RUN whoami
+
 RUN ls -latr
 
 RUN npm install
