@@ -9,6 +9,8 @@ RUN mkdir /app/node_modules/.vite \
 
 RUN chown -R node:node /app
 
+RUN pwd
+
 USER node
 
 RUN ls -latr
