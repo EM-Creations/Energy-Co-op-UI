@@ -36,6 +36,13 @@ jobs:
       - name: Run tests
         run: npm run test
 
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: build-${{ github.sha }}-${{ inputs.os }}
+          path: ./
+          retention-days: 1
+
 # Temporarily disabled Playwright tests
 #      - name: Install Playwright Browsers
 #        run: npx playwright install --with-deps
