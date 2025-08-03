@@ -11,7 +11,6 @@ RUN chmod -R 755 /app
 
 USER node
 
-RUN npm install -g @angular/cli@16.2.0
 RUN npm install
 
 EXPOSE 4200
