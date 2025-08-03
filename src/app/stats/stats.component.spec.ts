@@ -2,13 +2,15 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {StatsComponent} from './stats.component';
 import {provideRouter} from '@angular/router';
-import {GraigFathaSiteDataService} from '../service/impl/graig-fatha-site-data.service';
 import {of} from 'rxjs';
+import {AuthService} from '@auth0/auth0-angular';
+import {InjectionToken} from '@angular/core';
 
 describe('StatsComponent', () => {
   let component: StatsComponent;
   let fixture: ComponentFixture<StatsComponent>;
   let siteDataService;
+  const AUTH0_CLIENT = new InjectionToken('auth0.client');
 
   beforeEach(async () => {
     siteDataService = {
@@ -22,7 +24,7 @@ describe('StatsComponent', () => {
       providers: [
         provideRouter([]),
 
-        { provide: GraigFathaSiteDataService, useValue: siteDataService }
+        { provide: AuthService, useValue: AUTH0_CLIENT }
       ]
     })
     .compileComponents();
