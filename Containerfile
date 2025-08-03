@@ -9,6 +9,8 @@ RUN mkdir /app/node_modules/.vite \
 
 USER node
 
+RUN ls -latr
+
 RUN npm install
 
 EXPOSE 4200
