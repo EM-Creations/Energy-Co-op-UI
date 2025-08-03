@@ -7,9 +7,9 @@ COPY . .
 RUN mkdir /app/node_modules/.vite \
     && chown -R node:node /app/node_modules/.vite
 
-RUN npm install
-
 USER node
+
+RUN npm install
 
 EXPOSE 4200
 
