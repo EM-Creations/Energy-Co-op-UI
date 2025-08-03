@@ -4,10 +4,10 @@ MAINTAINER em-creations.co.uk
 WORKDIR /app
 COPY . .
 
-RUN npm install
-
 RUN mkdir /app/node_modules/.vite \
     && chown -R node:node /app/node_modules/.vite
+
+RUN npm install
 
 USER node
 
