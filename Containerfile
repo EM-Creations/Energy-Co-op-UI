@@ -1,8 +1,8 @@
 FROM node:22.14.0-alpine
 MAINTAINER em-creations.co.uk
 
-WORKDIR ./app
-COPY . ./app
+WORKDIR /usr/src/app
+COPY . /usr/src/app
 
 RUN npm install
 
