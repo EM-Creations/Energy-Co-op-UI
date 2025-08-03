@@ -2,7 +2,7 @@
   @let user = auth.user$ | async;
 
   @if (user) {
-    <div class="user-info">
+    <div class="user-info" routerLink="/profile" matTooltip="Your Profile">
       <img src="{{ user.picture }}" alt="User Picture"/>
     </div>
   }

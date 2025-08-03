@@ -1,16 +1,9 @@
 <h1>{{ title }}</h1>
-<p>Welcome to your Energy Co-op User Interface.</p>
+<p>Welcome
+  @let user = auth.user$ | async;
+  @if (user) {
+    @let accessToken = userService.getAccessToken();
+    {{ user.name }}
+  }
+  to your Energy Co-op User Interface.</p>
 <p> Please select options on the left to navigate.</p>
-
-@let user = auth.user$ | async;
-@if (user) {
-  @let accessToken = userService.getAccessToken();
-  <ul>
-    <img src="{{ user.picture }}" alt="User Picture" />
-    <li>{{ user.name }}</li>
-    <li>{{ user.email }}</li>
-    <li>{{ JSON.stringify(accessToken.permissions) }}</li>
-  </ul>
-} @else {
-  <p>You are not logged in.</p>
-}

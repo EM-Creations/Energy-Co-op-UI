@@ -4,6 +4,7 @@ import {AuthButtonComponent} from '../../auth/auth-button/auth-button.component'
 import {AuthService} from '@auth0/auth0-angular';
 import {AsyncPipe} from '@angular/common';
 import {UserService} from '../../service/user.service';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-left-nav',
@@ -11,7 +12,8 @@ import {UserService} from '../../service/user.service';
     RouterLinkActive,
     RouterLink,
     AuthButtonComponent,
-    AsyncPipe
+    AsyncPipe,
+    MatTooltip
   ],
   templateUrl: './left-nav.component.html',
   styleUrl: './left-nav.component.scss'

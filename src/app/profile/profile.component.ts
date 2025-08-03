@@ -1,19 +1,21 @@
 import {Component, inject} from '@angular/core';
 import {AuthService} from '@auth0/auth0-angular';
 import {AsyncPipe} from '@angular/common';
-import {UserService} from '../../service/user.service';
+import {UserService} from '../service/user.service';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-profile',
   imports: [
     AsyncPipe
   ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  templateUrl: './profile.component.html',
+  styleUrl: './profile.component.scss'
 })
-export class HomeComponent {
+export class ProfileComponent {
   auth = inject(AuthService);
   userService = inject(UserService);
 
-  title = 'Energy Co-op UI';
+  title = 'Your Profile';
+
+  protected readonly JSON = JSON;
 }
