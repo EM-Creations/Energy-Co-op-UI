@@ -3,7 +3,7 @@
   @let accessToken = userService.getAccessToken();
   <h2>{{ title }}</h2>
   <ul>
-    <img src="{{ user.picture }}" alt="User Picture" />
+    <img src="{{ user.picture }}" alt="User Picture"/>
     <li><b>Name:</b> {{ user.name }}</li>
     <li><b>Email:</b> {{ user.email }}</li>
     <li><b>Ownerships:</b> {{ JSON.stringify(user['ownerships']) }}</li>

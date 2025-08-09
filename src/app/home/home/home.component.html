@@ -2,7 +2,6 @@
 <p>Welcome
   @let user = auth.user$ | async;
   @if (user) {
-    @let accessToken = userService.getAccessToken();
     {{ user.name }}
   }
   to your Energy Co-op User Interface.</p>
