@@ -1,33 +1,19 @@
-section#stats {
-  display: flex;
-  flex-grow: 1;
-  height: 100%;
-  padding-left: 0;
-  flex-direction: column;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-section#stats > div {
-  display: block;
-  width: 100%;
-  background: #9cbcf0;
-  color: white;
-  padding-inline: 0.75rem;
-  padding-block: 0.375rem;
-  border-radius: 0.5rem;
-  border: 0;
-  transition: background 0.3s ease;
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.4rem;
-  letter-spacing: -0.00875rem;
-  text-decoration: none;
-}
-
 section#stats > div > h1 {
   display: block;
   margin-top: auto;
+  margin-bottom: 1rem;
+  font-size: 2em;
+}
+
+section#stats > div > div.description {
+  font-size: 1em;
+}
+
+section#stats > div > div.site-data {
+  margin: 0.5rem 0;
+}
+
+a, a:visited, a:link, a:active {
+  color: #0e70c0;
+  text-decoration: none;
 }
