@@ -42,6 +42,7 @@
     "@auth0/auth0-angular": "^2.2.3",
     "express": "^5.1.0",
     "jwt-decode": "^4.0.0",
+    "moment": "^2.30.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

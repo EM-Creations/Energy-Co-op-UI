@@ -25,6 +25,7 @@ export class StatsComponent implements OnInit {
   protected siteInfo?: SiteInfo;
 
   protected savingsToday = 0;
+  protected savingsLastWeek = 0;
   protected ownership = 0;
 
   ngOnInit(): void {
@@ -34,6 +35,21 @@ export class StatsComponent implements OnInit {
 
     this.memberService.getTodaySavings(this.siteInfo).subscribe((data => {
       this.savingsToday = data.amount;
+    }))
+
+    const eightDaysAgo = new Date();
+    eightDaysAgo.setDate(eightDaysAgo.getDate() - 8);
+
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    this.memberService.getHistoricalSavings(this.siteInfo, eightDaysAgo, yesterday).subscribe((data => {
+      let total = 0;
+      for (const saving of data) {
+        total += saving.amount;
+      }
+
+      this.savingsLastWeek = total;
     }))
   }
 
