@@ -1,12 +1,12 @@
 @let user = auth.user$ | async;
 @if (user) {
-  @let accessToken = userService.getAccessToken();
+  @let decodedToken = userService.getDecodedAccessToken$() | async;
   <h2>{{ title }}</h2>
   <ul>
     <img src="{{ user.picture }}" alt="User Picture"/>
     <li><b>Name:</b> {{ user.name }}</li>
     <li><b>Email:</b> {{ user.email }}</li>
     <li><b>Ownerships:</b> {{ JSON.stringify(user['ownerships']) }}</li>
-    <li><b>Permissions:</b> {{ JSON.stringify(accessToken.permissions) }}</li>
+    <li><b>Permissions:</b> {{ JSON.stringify(decodedToken?.permissions) }}</li>
   </ul>
 }

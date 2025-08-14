@@ -6,6 +6,7 @@ import {SiteInfo} from '../model/site-info';
 import {UserService} from '../service/user.service';
 import {AuthService} from '@auth0/auth0-angular';
 import {AsyncPipe} from '@angular/common';
+import {MemberService} from '../service/member.service';
 
 @Component({
   selector: 'app-stats',
@@ -18,15 +19,22 @@ export class StatsComponent implements OnInit {
   private siteInfoService = inject(SiteInfoService);
   auth = inject(AuthService);
   userService = inject(UserService);
-  ownership = 0;
+  memberService = inject(MemberService);
 
   protected siteName: string | null = "";
   protected siteInfo?: SiteInfo;
+
+  protected savingsToday = 0;
+  protected ownership = 0;
 
   ngOnInit(): void {
     this.siteName = this.route.snapshot.paramMap.get('site');
     this.siteInfo = this.siteInfoService.getSiteInfoFromName(this.siteName);
     this.setOwnershipForSite();
+
+    this.memberService.getTodaySavings(this.siteInfo).subscribe((data => {
+      this.savingsToday = data.amount;
+    }))
   }
 
   setOwnershipForSite(): void {

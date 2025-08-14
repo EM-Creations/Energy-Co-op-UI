@@ -19,7 +19,6 @@ export class AuthButtonComponent {
   handleLogin(): void {
     this.auth.loginWithRedirect().subscribe(() => {
         this.userService.retrieveUser();
-        this.userService.retrieveAccessToken();
       }
     )
   }

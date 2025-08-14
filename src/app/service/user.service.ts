@@ -1,14 +1,40 @@
 import {inject, Injectable} from '@angular/core';
-import {jwtDecode} from 'jwt-decode';
 import {AuthService, User} from '@auth0/auth0-angular';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {jwtDecode} from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   auth = inject(AuthService);
-  private accessToken: any | null = null;
   private user: User | null | undefined = null;
+
+  /**
+   * Returns an Observable that emits the current Auth0 access token.
+   * Always retrieves the latest token, avoiding race conditions.
+   */
+  getAccessTokenSilently$(): Observable<string> {
+    return this.auth.getAccessTokenSilently();
+  }
+
+  /**
+   * Returns an Observable that emits the decoded access token (JWT claims).
+   * Decodes the token only when available, and emits null on error.
+   */
+  getDecodedAccessToken$(): Observable<any | null> {
+    return this.getAccessTokenSilently$().pipe(
+      map(token => {
+        try {
+          return jwtDecode(token);
+        } catch (e) {
+          console.error('Error decoding access token:', e);
+          return null;
+        }
+      })
+    );
+  }
 
   retrieveUser(): void {
     if (this.auth.isAuthenticated$) {
@@ -16,37 +42,5 @@ export class UserService {
         this.user = user;
       })
     }
-  }
-
-  retrieveAccessToken(): void {
-    if (this.auth.isAuthenticated$) {
-      this.auth.isAuthenticated$.subscribe(() => {
-        this.auth.getAccessTokenSilently().subscribe(token => {
-          try {
-            const decodedToken = jwtDecode(token);
-            console.log('Access token:', decodedToken);
-            this.accessToken = decodedToken;
-          } catch (error) {
-            console.log('Error decoding access token:', error);
-            this.accessToken = null;
-          }
-        })
-      });
-    }
-  }
-
-  getAccessToken(): any | null {
-    if (!this.accessToken) {
-      this.retrieveAccessToken();
-    }
-
-    return this.accessToken;
-  }
-
-  getUser(): User | null | undefined {
-    if (!this.user) {
-      this.retrieveUser();
-    }
-    return this.user;
   }
 }
