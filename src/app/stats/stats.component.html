@@ -22,7 +22,10 @@
         <b>Your savings today:</b> £{{ savingsToday }}
       </div>
       <div>
-        <b>Savings last week:</b> £{{ savingsLastWeek }}
+        <b>Savings last 30 days:</b> £{{ savingsLast30Days }}
+      </div>
+      <div id="savingsChart">
+        <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
       </div>
     </div>
   </section>

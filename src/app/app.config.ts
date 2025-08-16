@@ -6,6 +6,7 @@ import {provideClientHydration, withEventReplay} from '@angular/platform-browser
 import {provideHttpClient, withNoXsrfProtection} from '@angular/common/http';
 import {provideAuth0} from '@auth0/auth0-angular';
 import {environment} from '../environments/environment';
+import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
         redirect_uri: environment.auth0.redirectUri
       },
       errorPath: '/error'
-    })
+    }),
+    provideCharts(withDefaultRegisterables())
   ]
 };

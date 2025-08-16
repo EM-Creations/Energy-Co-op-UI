@@ -7,10 +7,12 @@ import {UserService} from '../service/user.service';
 import {AuthService} from '@auth0/auth0-angular';
 import {AsyncPipe} from '@angular/common';
 import {MemberService} from '../service/member.service';
+import {BaseChartDirective} from 'ng2-charts';
+import {ChartConfiguration} from 'chart.js';
 
 @Component({
   selector: 'app-stats',
-  imports: [MatIconModule, AsyncPipe],
+  imports: [MatIconModule, AsyncPipe, BaseChartDirective],
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.scss'
 })
@@ -25,8 +27,22 @@ export class StatsComponent implements OnInit {
   protected siteInfo?: SiteInfo;
 
   protected savingsToday = 0;
-  protected savingsLastWeek = 0;
+  protected savingsLast30Days = 0;
   protected ownership = 0;
+  protected barChartLegend = true;
+  protected barChartPlugins = [];
+
+  protected barChartData: ChartConfiguration<'bar'>['data'] = {
+    labels: [ '2006', '2007', '2008', '2009', '2010', '2011', '2012' ],
+    datasets: [
+      { data: [ 65, 59, 80, 81, 56, 55, 40 ], label: 'Series A' },
+      { data: [ 28, 48, 40, 19, 86, 27, 90 ], label: 'Series B' }
+    ]
+  };
+
+  protected barChartOptions: ChartConfiguration<'bar'>['options'] = {
+    responsive: false,
+  };
 
   ngOnInit(): void {
     this.siteName = this.route.snapshot.paramMap.get('site');
@@ -37,19 +53,37 @@ export class StatsComponent implements OnInit {
       this.savingsToday = data.amount;
     }))
 
-    const eightDaysAgo = new Date();
-    eightDaysAgo.setDate(eightDaysAgo.getDate() - 8);
+    const thirtyOneDaysAgo = new Date();
+    thirtyOneDaysAgo.setDate(thirtyOneDaysAgo.getDate() - 31);
 
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
 
-    this.memberService.getHistoricalSavings(this.siteInfo, eightDaysAgo, yesterday).subscribe((data => {
+    this.memberService.getHistoricalSavings(this.siteInfo, thirtyOneDaysAgo, yesterday).subscribe((data => {
+      const sortedData = Array.from(data).sort((a, b) => new Date(a.to).getTime() - new Date(b.to).getTime());
+      console.log('Historical savings data:', sortedData);
+
+      const barChartLabels: string[] = [];
+      const barChartDataValues: number[] = [];
+
       let total = 0;
-      for (const saving of data) {
+      for (const saving of sortedData) {
         total += saving.amount;
+
+        const toDate = new Date(saving.to);
+
+        barChartLabels.push(toDate.toDateString());
+        barChartDataValues.push(saving.amount);
       }
 
-      this.savingsLastWeek = total;
+      this.savingsLast30Days = total;
+
+      this.barChartData = {
+        labels: barChartLabels,
+        datasets: [
+          { data: barChartDataValues, label: 'Savings' }
+        ]
+      };
     }))
   }
 
