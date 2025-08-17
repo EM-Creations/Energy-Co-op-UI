@@ -16,13 +16,13 @@
         </b>
       </div>
       <div>
-        <b>Your ownership:</b> {{ ownership }} W
+        <b>Your ownership:</b> {{ ownership | number:'1.2-2' }} W
       </div>
       <div>
-        <b>Your savings today:</b> £{{ savingsToday }}
+        <b>Your savings today:</b> {{ savingsToday | currency:'GBP':'symbol' }}
       </div>
       <div>
-        <b>Savings last 30 days:</b> £{{ savingsLast30Days }}
+        <b>Savings last 30 days:</b> {{ savingsLast30Days | currency:'GBP':'symbol' }}
       </div>
       <div id="savingsChart">
         <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>

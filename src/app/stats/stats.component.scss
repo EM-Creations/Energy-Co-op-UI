@@ -17,3 +17,23 @@ a, a:visited, a:link, a:active {
   color: #0e70c0;
   text-decoration: none;
 }
+
+#savingsChart {
+  width: 100%;
+  min-height: 400px;
+  margin: 2rem 0;
+  display: block;
+  canvas {
+    width: 100% !important;
+    height: 400px !important;
+    max-width: none !important;
+  }
+}
+
+section#stats {
+  width: 100%;
+  > div {
+    width: 100%;
+    max-width: none;
+  }
+}

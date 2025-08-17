@@ -1,4 +1,7 @@
 :host {
+  display: block;
+  width: 100%;
+
   --bright-blue: oklch(51.01% 0.274 263.83);
   --electric-violet: oklch(53.18% 0.28 296.97);
   --french-violet: oklch(47.66% 0.246 305.88);
@@ -36,14 +39,30 @@ main {
   width: 100%;
   min-height: 100%;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  max-width: none;
 }
 
 section#content {
   display: flex;
-  flex-grow: 1;
-  max-width: 700px;
+  width: 100%;
   margin-top: 2rem;
   margin-bottom: 3rem;
+  box-sizing: border-box;
+
+  app-left-nav {
+    flex-shrink: 0;
+  }
+}
+
+section#right-side {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 5%;
 }
 
 section#content h1 {
@@ -65,7 +84,11 @@ section#content p {
 @media screen and (max-width: 650px) {
   section#content {
     flex-direction: column;
-    width: max-content;
+    width: 100%;
+  }
+
+  section#right-side {
+    width: 100%;
   }
 
   .divider {

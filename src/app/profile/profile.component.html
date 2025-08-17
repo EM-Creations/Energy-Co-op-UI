@@ -1,14 +1,17 @@
 @let user = auth.user$ | async;
 @if (user) {
-<!--  @let decodedToken = userService.getDecodedAccessToken$() | async;-->
-<!--  @if (decodedToken) {-->
     <h2>{{ title }}</h2>
     <ul>
       <img src="{{ user.picture }}" alt="User Picture"/>
       <li><b>Name:</b> {{ user.name }}</li>
       <li><b>Email:</b> {{ user.email }}</li>
-      <li><b>Ownerships:</b> {{ JSON.stringify(user['ownerships']) }}</li>
-<!--      <li><b>Permissions:</b> {{ JSON.stringify(decodedToken?.permissions) }}</li>-->
+      <li>
+        <b>Ownerships:</b>
+        <ul>
+          @for (o of user['ownerships'] | keyvalue; track o.key) {
+            <li>{{ o.key }} &rarr; {{ o.value }}</li>
+          }
+        </ul>
+      </li>
     </ul>
-<!--  }-->
 }

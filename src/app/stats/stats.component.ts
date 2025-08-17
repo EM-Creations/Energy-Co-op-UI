@@ -5,14 +5,14 @@ import {SiteInfoService} from '../service/site-info.service';
 import {SiteInfo} from '../model/site-info';
 import {UserService} from '../service/user.service';
 import {AuthService} from '@auth0/auth0-angular';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, CurrencyPipe, DecimalPipe} from '@angular/common';
 import {MemberService} from '../service/member.service';
 import {BaseChartDirective} from 'ng2-charts';
 import {ChartConfiguration} from 'chart.js';
 
 @Component({
   selector: 'app-stats',
-  imports: [MatIconModule, AsyncPipe, BaseChartDirective],
+  imports: [MatIconModule, AsyncPipe, BaseChartDirective, CurrencyPipe, DecimalPipe],
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.scss'
 })
@@ -29,19 +29,39 @@ export class StatsComponent implements OnInit {
   protected savingsToday = 0;
   protected savingsLast30Days = 0;
   protected ownership = 0;
-  protected barChartLegend = true;
-  protected barChartPlugins = [];
+  private barChartLegendEnabled = true;
 
   protected barChartData: ChartConfiguration<'bar'>['data'] = {
-    labels: [ '2006', '2007', '2008', '2009', '2010', '2011', '2012' ],
+    labels: [ '1', '2', '3', '4', '5' ],
     datasets: [
-      { data: [ 65, 59, 80, 81, 56, 55, 40 ], label: 'Series A' },
-      { data: [ 28, 48, 40, 19, 86, 27, 90 ], label: 'Series B' }
+      { data: [ 1, 2, 3, 4, 5 ], label: 'Loading savings..' }
     ]
   };
 
   protected barChartOptions: ChartConfiguration<'bar'>['options'] = {
-    responsive: false,
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: {
+          autoSkip: false
+        }
+      },
+      y: {
+        ticks: {
+          // Include a currency symbol in the ticks
+          callback: (value) => {
+            return '£' + value;
+          }
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: this.barChartLegendEnabled,
+        position: 'top'
+      }
+    }
   };
 
   ngOnInit(): void {
