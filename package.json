@@ -41,6 +41,7 @@
     "@angular/ssr": "^20.1.4",
     "@auth0/auth0-angular": "^2.2.3",
     "chart.js": "^4.5.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "express": "^5.1.0",
     "jwt-decode": "^4.0.0",
     "moment": "^2.30.1",

@@ -48,3 +48,15 @@ p {
   color: var(--gray-700);
   margin: 1.75rem 0 0;
 }
+
+#energyMixChart {
+  width: 100%;
+  min-height: 400px;
+  margin: 2rem 0;
+  display: block;
+  canvas {
+    width: 100% !important;
+    height: 400px !important;
+    max-width: none !important;
+  }
+}

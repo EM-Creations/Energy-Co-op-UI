@@ -6,3 +6,8 @@
   }
   to your Energy Co-op User Interface.</p>
 <p> Please select options on the left to navigate.</p>
+
+<h2>Live Energy Mix for the UK</h2>
+<div id="energyMixChart">
+  <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'" [plugins]=pieChartPlugins></canvas>
+</div>
