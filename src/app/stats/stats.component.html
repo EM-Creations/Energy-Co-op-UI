@@ -19,10 +19,13 @@
         <b>Your ownership:</b> {{ ownership | number:'1.2-2' }} W
       </div>
       <div>
-        <b>Your savings today:</b> {{ savingsToday | currency:'GBP':'symbol' }}
+        <b>Your savings today(*):</b> {{ savingsToday | currency:'GBP':'symbol' }}
       </div>
       <div>
-        <b>Savings last 30 days:</b> {{ savingsLast30Days | currency:'GBP':'symbol' }}
+        <b>Your savings last 30 days(*):</b> {{ savingsLast30Days | currency:'GBP':'symbol' }}
+      </div>
+      <div id="savingsDisclaimer">
+        * Savings are estimates only and do not reflect exact amounts which will be paid to you.
       </div>
       <div id="savingsChart">
         <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
