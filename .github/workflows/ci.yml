@@ -9,7 +9,7 @@ on:
 permissions:
   actions: read
   checks: write
-  contents: write # Change to read
+  contents: read
   issues: read
   packages: write
   pull-requests: write
@@ -86,6 +86,7 @@ jobs:
       - Build-With-Tests-Mac
     permissions:
       contents: write
+      checks: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -96,8 +97,7 @@ jobs:
         id: coverage
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-#          skip-step: install
-          test-script: npm run test
+          test-script: npm run test:coverage
           annotations: failed-tests
           output: report-markdown
 

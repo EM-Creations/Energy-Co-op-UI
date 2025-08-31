@@ -8,13 +8,14 @@
     "start:server": "npm start",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "jest --ci --json --coverage",
+    "test": "jest",
+    "test:coverage": "jest --ci --json --coverage",
     "e2e": "npx playwright test --ui",
     "e2e:headless": "npx playwright test",
     "e2e:ci": "start-test start:server http-get://localhost:4200 e2e:headless",
     "serve:ssr:energy-co-op-ui": "node dist/energy-co-op-ui/server/server.mjs",
     "lint": "ng lint",
-    "pre-push-check": "npm run build && npm run lint && npm run test && npm run e2e:ci"
+    "pre-push-check": "npm run build && npm run lint && npm run test:coverage && npm run e2e:ci"
   },
   "private": true,
   "jest-junit": {
