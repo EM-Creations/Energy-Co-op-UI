@@ -39,7 +39,10 @@ jobs:
       - name: Generate coverage report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
+          skip-step: install
           test-script: npm run test
+          annotations: failed-tests
+          output: report-markdown
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
