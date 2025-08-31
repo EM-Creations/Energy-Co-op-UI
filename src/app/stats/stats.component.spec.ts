@@ -66,63 +66,69 @@ describe('StatsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set siteName and siteInfo on ngOnInit', () => {
-    expect(component['siteName']).toBe('Graig Fatha');
-    expect(component['siteInfo']).toEqual({ name: 'Graig Fatha' });
+  describe('ngOnInit', () => {
+    it('should set siteName and siteInfo', () => {
+      expect(component['siteName']).toBe('Graig Fatha');
+      expect(component['siteInfo']).toEqual({ name: 'Graig Fatha' });
+    });
+
+    it('should set savingsToday from memberService', () => {
+      expect(component['savingsToday']).toBe(42);
+    });
+
+    it('should set savingsLast30Days and barChartData from historical savings', () => {
+      expect(component['savingsLast30Days']).toBe(30);
+      expect(component['barChartData'].labels?.length).toBe(2);
+      expect(component['barChartData'].datasets[0].data).toEqual([20, 10]);
+      expect(component['barChartData'].datasets[0].label).toBe('Savings');
+    });
   });
 
-  it('should set savingsToday from memberService', () => {
-    expect(component['savingsToday']).toBe(42);
+  describe('setOwnershipForSite', () => {
+    it('should set ownership for Graig Fatha', (done) => {
+      component['siteName'] = 'Graig Fatha';
+      component.setOwnershipForSite();
+      setTimeout(() => {
+        expect(component['ownership']).toBe(123);
+        done();
+      }, 0);
+    });
+
+    it('should set ownership for Kirk Hill', (done) => {
+      component['siteName'] = 'Kirk Hill';
+      component.setOwnershipForSite();
+      setTimeout(() => {
+        expect(component['ownership']).toBe(456);
+        done();
+      }, 0);
+    });
+
+    it('should set ownership for Derril Water', (done) => {
+      component['siteName'] = 'Derril Water';
+      component.setOwnershipForSite();
+      setTimeout(() => {
+        expect(component['ownership']).toBe(789);
+        done();
+      }, 0);
+    });
+
+    it('should set ownership to 0 for unknown site', (done) => {
+      component['siteName'] = 'Unknown';
+      component.setOwnershipForSite();
+      setTimeout(() => {
+        expect(component['ownership']).toBe(0);
+        done();
+      }, 0);
+    });
   });
 
-  it('should set savingsLast30Days and barChartData from historical savings', () => {
-    expect(component['savingsLast30Days']).toBe(30);
-    expect(component['barChartData'].labels?.length).toBe(2);
-    expect(component['barChartData'].datasets[0].data).toEqual([20, 10]);
-    expect(component['barChartData'].datasets[0].label).toBe('Savings');
-  });
-
-  it('should set ownership for Graig Fatha', (done) => {
-    component['siteName'] = 'Graig Fatha';
-    component.setOwnershipForSite();
-    setTimeout(() => {
-      expect(component['ownership']).toBe(123);
-      done();
-    }, 0);
-  });
-
-  it('should set ownership for Kirk Hill', (done) => {
-    component['siteName'] = 'Kirk Hill';
-    component.setOwnershipForSite();
-    setTimeout(() => {
-      expect(component['ownership']).toBe(456);
-      done();
-    }, 0);
-  });
-
-  it('should set ownership for Derril Water', (done) => {
-    component['siteName'] = 'Derril Water';
-    component.setOwnershipForSite();
-    setTimeout(() => {
-      expect(component['ownership']).toBe(789);
-      done();
-    }, 0);
-  });
-
-  it('should set ownership to 0 for unknown site', (done) => {
-    component['siteName'] = 'Unknown';
-    component.setOwnershipForSite();
-    setTimeout(() => {
-      expect(component['ownership']).toBe(0);
-      done();
-    }, 0);
-  });
-
-  it('should format y-axis ticks with £ symbol', () => {
-    const callback = component['barChartOptions'].scales && component['barChartOptions'].scales['y']?.ticks?.callback;
-    expect(typeof callback).toBe('function');
-    if (callback) {
-      expect(callback.call({}, 100, 0, [])).toBe('£100');
-    }
+  describe('barChartOptions', () => {
+    it('should format y-axis ticks with £ symbol', () => {
+      const callback = component['barChartOptions'].scales && component['barChartOptions'].scales['y']?.ticks?.callback;
+      expect(typeof callback).toBe('function');
+      if (callback) {
+        expect(callback.call({}, 100, 0, [])).toBe('£100');
+      }
+    });
   });
 });

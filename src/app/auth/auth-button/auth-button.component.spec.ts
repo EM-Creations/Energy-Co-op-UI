@@ -34,13 +34,17 @@ describe('AuthButtonComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('handleLogin', () => {
+    it('should call loginWithRedirect and retrieveUser', () => {
+      component.handleLogin();
+      expect(mockAuthService.loginWithRedirect).toHaveBeenCalled();
+      expect(mockUserService.retrieveUser).toHaveBeenCalled();
+    });
   });
 
-  it('should call loginWithRedirect and retrieveUser on handleLogin', () => {
-    component.handleLogin();
-    expect(mockAuthService.loginWithRedirect).toHaveBeenCalled();
-    expect(mockUserService.retrieveUser).toHaveBeenCalled();
+  describe('component creation', () => {
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
   });
 });
