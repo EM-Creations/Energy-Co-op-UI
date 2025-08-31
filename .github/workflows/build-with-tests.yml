@@ -34,6 +34,7 @@ jobs:
         run: npm run lint
 
       - name: Generate coverage report
+        if: ${{ inputs.os == 'ubuntu-latest' }} # Only run the code coverage on Linux to avoid multiple reports
         id: coverage
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
@@ -43,7 +44,7 @@ jobs:
           output: report-markdown
 
       - name: Output coverage summary
-        run: echo "${{ steps.coverage.outputs.report-markdown }}"
+        run: echo "${{ steps.coverage.outputs.report }}"
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
