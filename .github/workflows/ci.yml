@@ -9,7 +9,7 @@ on:
 permissions:
   actions: read
   checks: write
-  contents: write
+  contents: write # Change to read
   issues: read
   packages: write
   pull-requests: write
@@ -87,11 +87,14 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: dorny/test-reporter@v2
-        name: Test Report
-        if: github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]'
+      - name: Generate coverage report
+        id: coverage
+        uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          name: JEST Tests            # Name of the check run which will be created
-          token: ${{ secrets.GITHUB_TOKEN }}
-          path: ${{ github.workspace }}/reports/jest-*.xml    # Path to test results
-          reporter: jest-junit        # Format of test results
+#          skip-step: install
+          test-script: npm run test
+          annotations: failed-tests
+          output: report-markdown
+
+      - name: Output coverage report
+        run: echo '${{ steps.coverage.outputs.report }}' >> $GITHUB_STEP_SUMMARY
