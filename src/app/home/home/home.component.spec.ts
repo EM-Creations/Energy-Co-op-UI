@@ -40,4 +40,45 @@ describe('HomeComponent', () => {
   it('title should be set.', () => {
     expect(component.title).toEqual('Energy Co-op UI');
   });
+
+  it('should call getCurrentGenerationMix on ngOnInit', () => {
+    const spy = jest.spyOn(energyMixService, 'getCurrentGenerationMix');
+    component.ngOnInit();
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should update pieChartData with response data', () => {
+    const mockResponse = {
+      data: {
+        generationmix: [
+          { fuel: 'wind', perc: 40 },
+          { fuel: 'solar', perc: 20 },
+          { fuel: 'coal', perc: 10 }
+        ]
+      }
+    };
+    energyMixService.getCurrentGenerationMix.mockReturnValueOnce(of(mockResponse));
+    component.ngOnInit();
+    expect(component['pieChartData'].labels).toEqual(['Wind', 'Solar', 'Coal']);
+    expect(component['pieChartData'].datasets[0].data).toEqual([40, 20, 10]);
+    expect(component['pieChartData'].datasets[0].label).toBe('% of energy mix');
+  });
+
+  it('should format datalabels correctly', () => {
+    const formatter = component['pieChartOptions'].plugins!.datalabels!.formatter;
+    const context = {
+      chart: {
+        data: {
+          labels: ['Wind', 'Solar'],
+        },
+      },
+      dataIndex: 1,
+    };
+    expect(formatter(20, context)).toBe('Solar: 20%');
+    context.dataIndex = 0;
+    expect(formatter(40, context)).toBe('Wind: 40%');
+    // No label
+    context.chart.data.labels = undefined;
+    expect(formatter(10, context)).toBe('');
+  });
 });
