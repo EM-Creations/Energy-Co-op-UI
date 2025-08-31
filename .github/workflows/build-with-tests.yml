@@ -44,7 +44,7 @@ jobs:
           output: report-markdown
 
       - name: Output coverage summary
-        run: echo '${{ steps.coverage.outputs.report }}'
+        run: echo '${{ steps.coverage.outputs.report }}' >> $GITHUB_STEP_SUMMARY
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
