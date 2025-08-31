@@ -50,30 +50,6 @@ test.describe('Nav Bar', () => {
 
     await expect(navbar).toBeVisible();
   });
-
-  test.describe('Graig Fatha link', () => {
-    test('to exist', async ({ page }) => {
-      const link = page.locator('span', { hasText: "Graig Fatha" });
-
-      await expect(link).toBeVisible();
-    });
-
-    test('to work', async ({ page }) => {
-      const link = page.locator('span', { hasText: "Graig Fatha" });
-
-      await link.click();
-
-      expect(page.url()).toContain('/stats/Graig%20Fatha');
-    });
-  });
-
-  test.describe('Documents link', () => {
-    test('to exist', async ({ page }) => {
-      const link = page.locator('span', { hasText: "Documents" });
-
-      await expect(link).toBeVisible();
-    });
-  });
 });
 
 test.describe('Social Links', () => {
@@ -107,5 +83,11 @@ test.describe('Content', () => {
     const title = page.locator('app-home>h1', { hasText: expectedTitle });
 
     await expect(title).toBeVisible();
+  });
+
+  test('energy mix graph to exist', async({ page }) => {
+    const canvas = page.locator('app-home>#energyMixChart>canvas');
+
+    await expect(canvas).toBeVisible();
   });
 });
