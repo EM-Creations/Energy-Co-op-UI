@@ -8,7 +8,7 @@
     "start:server": "npm start",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "jest --ci --reporters=default --reporters=jest-junit",
+    "test": "jest --ci --reporters=default --reporters=jest-junit --coverage",
     "e2e": "npx playwright test --ui",
     "e2e:headless": "npx playwright test",
     "e2e:ci": "start-test start:server http-get://localhost:4200 e2e:headless",
