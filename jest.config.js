@@ -3,7 +3,6 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
   transformIgnorePatterns: [],
   testPathIgnorePatterns: ["/node_modules/", "/tests/"],
-  reporters: [ "default", "jest-junit" ],
   coverageThreshold: {
     global: {
       branches: 80,
