@@ -1,7 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 
 import {UserService} from './user.service';
-import {InjectionToken} from '@angular/core';
 import {AuthService} from '@auth0/auth0-angular';
 import {of} from 'rxjs';
 import {jwtDecode} from 'jwt-decode';
@@ -11,7 +10,6 @@ jest.mock('jwt-decode');
 describe('UserService', () => {
   let service: UserService;
   let authServiceMock: any;
-  const AUTH0_CLIENT = new InjectionToken('auth0.client');
 
   beforeEach(() => {
     authServiceMock = {
