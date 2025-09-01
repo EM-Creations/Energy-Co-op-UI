@@ -63,7 +63,7 @@
     "@playwright/test": "^1.54.1",
     "@types/express": "^5.0.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.1.0",
+    "@types/node": "^24.3.0",
     "angular-eslint": "20.1.1",
     "babel-loader": "^10.0.0",
     "babel-plugin-istanbul": "^7.0.0",
