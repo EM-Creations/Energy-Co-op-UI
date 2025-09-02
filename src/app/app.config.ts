@@ -17,8 +17,8 @@ export const appConfig: ApplicationConfig = {
       withNoXsrfProtection()
     ),
     provideAuth0({
-      domain: environment.auth0.domain,
-      clientId: environment.auth0.clientId,
+      domain: `${environment.auth0.domain}`,
+      clientId: `${environment.auth0.clientId}`,
       authorizationParams: {
         audience: environment.auth0.audience,
         scope: environment.auth0.scope,

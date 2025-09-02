@@ -19,7 +19,7 @@ export class MemberService {
   private static defaultEnergySaving: EnergySaving = {amount: 0, currency: 'GBP', from: new Date(), to: new Date()};
 
   constructor() {
-    this.baseURL = environment.api.baseURL;
+    this.baseURL = `${environment.api.baseURL}`;
   }
 
   getTodaySavings(site: SiteInfo): Observable<EnergySaving> {

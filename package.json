@@ -52,6 +52,7 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^20.0.0",
     "@angular/build": "^20.1.4",
     "@angular/cli": "^20.1.4",
     "@angular/compiler-cli": "^20.1.4",
@@ -68,6 +69,7 @@
     "babel-loader": "^10.0.0",
     "babel-plugin-istanbul": "^7.0.0",
     "blob-polyfill": "^9.0.20240710",
+    "dotenv-webpack": "^8.1.1",
     "eslint": "^9.32.0",
     "eslint-plugin-jest": "^29.0.1",
     "jest": "^30.0.5",
