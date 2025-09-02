@@ -53,3 +53,4 @@ node_modules/
 
 # Environment variables
 src/environments/environment.development.ts
+.env
