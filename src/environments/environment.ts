@@ -1,15 +1,15 @@
 export const environment = {
   production: true,
   auth0: {
-    domain: "your_domain.auth0.com",
-    clientId: "your_client_id",
-    audience: "your_audience",
+    domain: "dev-energycoop.uk.auth0.com",
+    clientId: "xN3rhmATd9PPs0I2bwzpdef2IUhaEQQo",
+    audience: "http://localhost:8080/",
     redirectUri: "http://localhost:4200",
     scope: "openid profile email",
     state: "xyz"
   },
   api: {
-    baseURL: "http://localhost:8080/api/v1",
+    baseURL: "energy-co-op-server/api/v1",
     energyMixURL: "https://api.carbonintensity.org.uk"
   }
 };
