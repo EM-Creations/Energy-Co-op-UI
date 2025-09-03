@@ -19,7 +19,8 @@ permissions:
 env:
   IMAGE_NAME: energycoop-ui
   IMAGE_TAGS: v1 latest ${{ github.sha }}
-  IMAGE_REGISTRY: ghcr.io/${{ github.repository }}
+  IMAGE_REGISTRY_GHCR: ghcr.io/${{ github.repository }}
+  IMAGE_REGISTRY_DOCKERHUB: docker.io/statusred
   REGISTRY_USER: ${{ github.actor }}
   REGISTRY_PASSWORD: ${{ github.token }}
 
@@ -51,8 +52,9 @@ jobs:
           name: build-${{ github.sha }}-ubuntu-latest
           path: ./
 
-      - name: Buildah Action
-        id: build-image
+# Build Docker Hub image and push to registry
+      - name: Buildah Action (DockerHub)
+        id: build-image-dockerhub
         uses: redhat-actions/buildah-build@v2
         with:
           image: ${{ env.IMAGE_NAME }}
@@ -61,21 +63,45 @@ jobs:
           containerfiles: |
             ./Containerfile
 
-      - name: downcase IMAGE_REGISTRY
+      - name: Push to Docker Hub
+        id: push-to-dockerhub
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-image-dockerhub.outputs.image }}
+          tags: ${{ steps.build-image-dockerhub.outputs.tags }}
+          registry: ${{ env.IMAGE_REGISTRY_DOCKERHUB }}
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Print image url (DOCKERHUB)
+        run: echo "Image pushed to ${{ steps.push-to-dockerhub.outputs.registry-paths }}"
+
+# Build GitHub Container Registry image and push to registry
+      - name: Buildah Action (GHCR)
+        id: build-image-ghcr
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: ${{ env.IMAGE_NAME }}
+          tags: ${{ env.IMAGE_TAGS }}
+          oci: true
+          containerfiles: |
+            ./Containerfile
+
+      - name: downcase IMAGE_REGISTRY_GHCR
         run: |
-          echo "IMAGE_REGISTRY=${IMAGE_REGISTRY,,}" >>${GITHUB_ENV}
+          echo "IMAGE_REGISTRY_GHCR=${IMAGE_REGISTRY_GHCR,,}" >>${GITHUB_ENV}
 
       - name: Push to GitHub Container Registry
         id: push-to-ghcr
         uses: redhat-actions/push-to-registry@v2
         with:
-          image: ${{ steps.build-image.outputs.image }}
-          tags: ${{ steps.build-image.outputs.tags }}
-          registry: ${{ env.IMAGE_REGISTRY }}
+          image: ${{ steps.build-image-ghcr.outputs.image }}
+          tags: ${{ steps.build-image-ghcr.outputs.tags }}
+          registry: ${{ env.IMAGE_REGISTRY_GHCR }}
           username: ${{ github.actor }}
           password: ${{ github.token }}
 
-      - name: Print image url
+      - name: Print image url (GHCR)
         run: echo "Image pushed to ${{ steps.push-to-ghcr.outputs.registry-paths }}"
 
   Test-Report:
