@@ -8,13 +8,6 @@ RUN npm install -g @angular/cli
 WORKDIR /app
 COPY package*.json ./
 
-#RUN mkdir /app/node_modules/.vite \
-#    && chown -R node:node /app/node_modules/.vite
-#RUN chown -R node:node /app
-#RUN chmod -R 755 /app
-
-#USER node
-
 RUN npm ci
 
 COPY . .
