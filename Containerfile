@@ -3,6 +3,8 @@ MAINTAINER em-creations.co.uk
 
 ENV NODE_OPTIONS --max_old_space_size=1024
 
+RUN npm install -g @angular/cli
+
 WORKDIR /app
 COPY package*.json ./
 
@@ -15,9 +17,11 @@ COPY package*.json ./
 
 RUN npm ci
 
-RUN npm install -g @angular/cli
-
 COPY . .
+
+RUN chmod -R 755 /app
+RUN chown -R 755 /app/node_modules
+RUN chmod +x /app/node_modules/@esbuild/linux-x64/bin/esbuild
 
 RUN npm run build --configuration=production
 
