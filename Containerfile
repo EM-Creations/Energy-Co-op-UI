@@ -1,10 +1,17 @@
 FROM node:22.14.0-alpine AS build
 MAINTAINER em-creations.co.uk
 
+# Install git
+RUN apk add --no-cache git
+CMD ["git", "--version"]
+
+# Increase memory limit for Node
 ENV NODE_OPTIONS --max_old_space_size=1024
 
+# Install Angular CLI
 RUN npm install -g @angular/cli
 
+# Install the project's dependencies
 WORKDIR /app
 COPY . .
 
@@ -14,6 +21,7 @@ RUN chmod -R 755 /app
 RUN chown -R 755 /app/node_modules
 RUN chmod +x /app/node_modules/@esbuild/linux-x64/bin/esbuild
 
+# Build the project
 RUN npm run build --configuration=production
 
 FROM nginx:stable-alpine3.21-perl
