@@ -16,7 +16,7 @@ export class MemberService {
   userService = inject(UserService);
 
   private readonly baseURL: string;
-  private static defaultEnergySaving: EnergySaving = {amount: 0, currency: 'GBP', from: new Date(), to: new Date()};
+  private static defaultEnergySaving: EnergySaving = {amount: 0, currency: 'GBP', savingsRate: 0, from: new Date(), to: new Date()};
 
   constructor() {
     this.baseURL = environment.api.baseURL;

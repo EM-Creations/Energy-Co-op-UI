@@ -13,6 +13,7 @@ import {ChartConfiguration} from 'chart.js';
 @Component({
   selector: 'app-stats',
   imports: [MatIconModule, AsyncPipe, BaseChartDirective, CurrencyPipe, DecimalPipe],
+  providers: [DecimalPipe],
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.scss'
 })
@@ -22,6 +23,7 @@ export class StatsComponent implements OnInit {
   auth = inject(AuthService);
   userService = inject(UserService);
   memberService = inject(MemberService);
+  decimalPipe = inject(DecimalPipe);
 
   protected siteName: string | null = "";
   protected siteInfo?: SiteInfo;
@@ -30,6 +32,8 @@ export class StatsComponent implements OnInit {
   protected savingsLast30Days = 0;
   protected ownership = 0;
   private barChartLegendEnabled = true;
+
+  protected barChartSavingsRates: (number | undefined)[] = [];
 
   protected barChartData: ChartConfiguration<'bar'>['data'] = {
     labels: [ '1', '2', '3', '4', '5' ],
@@ -60,8 +64,21 @@ export class StatsComponent implements OnInit {
       legend: {
         display: this.barChartLegendEnabled,
         position: 'top'
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const index = context.dataIndex;
+            const amount = context.parsed.y;
+            const savingsRate = this.barChartSavingsRates[index];
+            const amountFormatted = this.decimalPipe.transform(amount, '1.2-2');
+            const savingsRateFormatted = savingsRate !== undefined ? (savingsRate * 100).toFixed(2) + 'p/kWh' : 'N/A';
+
+            return `£${amountFormatted} (Rate: ${savingsRateFormatted})`;
+          }
+        }
       }
-    }
+      }
   };
 
   ngOnInit(): void {
@@ -94,6 +111,7 @@ export class StatsComponent implements OnInit {
 
         barChartLabels.push(toDate.toDateString());
         barChartDataValues.push(saving.amount);
+        this.barChartSavingsRates.push(saving.savingsRate); // Store savingsRate
       }
 
       this.savingsLast30Days = total;

@@ -124,11 +124,48 @@ describe('StatsComponent', () => {
 
   describe('barChartOptions', () => {
     it('should format y-axis ticks with £ symbol', () => {
-      const callback = component['barChartOptions'].scales && component['barChartOptions'].scales['y']?.ticks?.callback;
+      const callback = component['barChartOptions'].scales!.y!.ticks!.callback!;
       expect(typeof callback).toBe('function');
-      if (callback) {
-        expect(callback.call({}, 100, 0, [])).toBe('£100');
-      }
+      expect(callback(100)).toBe('£100');
+    });
+    it('should format tooltip label with savingsRate present', () => {
+      component['barChartSavingsRates'] = [0.1234];
+      const context: any = {
+        dataIndex: 0,
+        parsed: { y: 10 }
+      };
+      const callback = component['barChartOptions'].plugins!.tooltip!.callbacks!.label!;
+      expect(typeof callback).toBe('function');
+      const label = callback(context);
+      expect(label).toContain('£10.00');
+      expect(label).toContain('12.34p/kWh');
+    });
+    it('should format tooltip label with savingsRate undefined', () => {
+      component['barChartSavingsRates'] = [undefined];
+      const context: any = {
+        dataIndex: 0,
+        parsed: { y: 5 }
+      };
+      const callback = component['barChartOptions'].plugins!.tooltip!.callbacks!.label!;
+      expect(typeof callback).toBe('function');
+      const label = callback(context);
+      expect(label).toContain('£5.00');
+      expect(label).toContain('N/A');
+    });
+  });
+
+  describe('ngOnInit edge cases', () => {
+    it('should handle missing savingsRate in historical savings', () => {
+      mockMemberService.getHistoricalSavings = jest.fn().mockReturnValue(of([
+        { amount: 10, to: new Date().toISOString() },
+        { amount: 20, to: new Date(Date.now() - 86400000).toISOString(), savingsRate: 0.2 }
+      ]));
+      component.ngOnInit();
+      // barChartSavingsRates should have [undefined, 0.2]
+      setTimeout(() => {
+        expect(component['barChartSavingsRates'][0]).toBeUndefined();
+        expect(component['barChartSavingsRates'][1]).toBe(0.2);
+      }, 0);
     });
   });
 });
