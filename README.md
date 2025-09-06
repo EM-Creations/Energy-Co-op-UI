@@ -141,10 +141,10 @@ This will compile your project and store the build artifacts in the `dist/` dire
 
 ## Running unit tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+To execute unit tests with Jest, use the following command:
 
 ```bash
-ng test
+npm run test
 ```
 
 ## Running end-to-end tests
@@ -196,8 +196,6 @@ Distributed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 
 * [Img Shields](https://shields.io)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

@@ -101,28 +101,8 @@ p {
   --pill-accent: var(--hot-red);
 }
 
-.pill-group svg {
-  margin-inline-start: 0.25rem;
-}
+//.pill-group svg {
+//  margin-inline-start: 0.25rem;
+//}
 
-.social-links {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
 
-.social-links > a {
-  display: flex;
-  width: 2.5rem;
-}
-
-.social-links path {
-  transition: fill 0.3s ease;
-  fill: var(--gray-400);
-}
-
-.social-links a:hover svg path {
-  fill: var(--gray-900);
-}

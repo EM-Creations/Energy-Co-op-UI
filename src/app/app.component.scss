@@ -98,3 +98,39 @@ section#content p {
     margin-block: 1.5rem;
   }
 }
+
+footer {
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--gray-700);
+  border-top: 1px solid var(--gray-400);
+}
+
+footer > p#author {
+  font-size: 0.75rem;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.social-links > a {
+  display: flex;
+  width: 2.5rem;
+}
+
+.social-links path {
+  transition: fill 0.3s ease;
+  fill: var(--gray-400);
+}
+
+.social-links a:hover svg path {
+  fill: var(--gray-900);
+}
