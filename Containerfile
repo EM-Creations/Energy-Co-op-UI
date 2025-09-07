@@ -1,6 +1,8 @@
 FROM node:22.14.0-alpine AS build
 MAINTAINER em-creations.co.uk
 
+ARG ENV=production
+
 # Install git
 RUN apk add --no-cache git
 CMD ["git", "--version"]
@@ -22,7 +24,7 @@ RUN chown -R 755 /app/node_modules
 RUN chmod +x /app/node_modules/@esbuild/linux-x64/bin/esbuild
 
 # Build the project
-RUN npm run build --configuration=production
+RUN npm run build --configuration=$ENV
 
 FROM nginx:stable-alpine3.21-perl
 

@@ -19,6 +19,7 @@ permissions:
 env:
   IMAGE_NAME: energycoop-ui
   IMAGE_TAGS: v1 latest ${{ github.sha }}
+  IMAGE_TAGS_STAGING: staging ${{ github.sha }}-staging
   IMAGE_REGISTRY_GHCR: ghcr.io/${{ github.repository }}
   IMAGE_REGISTRY_DOCKERHUB: docker.io/statusred
   REGISTRY_USER: ${{ github.actor }}
@@ -40,7 +41,8 @@ jobs:
     with:
       os: macos-latest
 
-  OCI-Image:
+# Staging OCI image
+  OCI-Image-Staging:
     runs-on: ubuntu-latest
     needs:
       - Build-With-Tests-Linux
@@ -52,23 +54,25 @@ jobs:
           name: build-${{ github.sha }}-ubuntu-latest
           path: ./
 
-# Build Docker Hub image and push to registry
+      # Build Docker Hub image and push to registry
       - name: Buildah Action (DockerHub)
-        id: build-image-dockerhub
+        id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
           image: ${{ env.IMAGE_NAME }}
-          tags: ${{ env.IMAGE_TAGS }}
+          tags: ${{ env.IMAGE_TAGS_STAGING }}
           oci: true
           containerfiles: |
             ./Containerfile
+          build-args: |
+            ENV=staging
 
       - name: Push to Docker Hub
         id: push-to-dockerhub
         uses: redhat-actions/push-to-registry@v2
         with:
-          image: ${{ steps.build-image-dockerhub.outputs.image }}
-          tags: ${{ steps.build-image-dockerhub.outputs.tags }}
+          image: ${{ steps.build-image.outputs.image }}
+          tags: ${{ steps.build-image.outputs.tags }}
           registry: ${{ env.IMAGE_REGISTRY_DOCKERHUB }}
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
@@ -76,9 +80,22 @@ jobs:
       - name: Print image url (DOCKERHUB)
         run: echo "Image pushed to ${{ steps.push-to-dockerhub.outputs.registry-paths }}"
 
-# Build GitHub Container Registry image and push to registry
-      - name: Buildah Action (GHCR)
-        id: build-image-ghcr
+# Production OCI image
+  OCI-Image:
+    runs-on: ubuntu-latest
+    needs:
+      - OCI-Image-Staging
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-${{ github.sha }}-ubuntu-latest
+          path: ./
+
+# Build image
+      - name: Buildah Action (DockerHub)
+        id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
           image: ${{ env.IMAGE_NAME }}
@@ -86,7 +103,24 @@ jobs:
           oci: true
           containerfiles: |
             ./Containerfile
+          build-args: |
+            ENV=production
 
+# Push to Docker Hub Registry
+      - name: Push to Docker Hub
+        id: push-to-dockerhub
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-image.outputs.image }}
+          tags: ${{ steps.build-image.outputs.tags }}
+          registry: ${{ env.IMAGE_REGISTRY_DOCKERHUB }}
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Print image url (DOCKERHUB)
+        run: echo "Image pushed to ${{ steps.push-to-dockerhub.outputs.registry-paths }}"
+
+# Push to GitHub Container Registry
       - name: downcase IMAGE_REGISTRY_GHCR
         run: |
           echo "IMAGE_REGISTRY_GHCR=${IMAGE_REGISTRY_GHCR,,}" >>${GITHUB_ENV}
@@ -95,8 +129,8 @@ jobs:
         id: push-to-ghcr
         uses: redhat-actions/push-to-registry@v2
         with:
-          image: ${{ steps.build-image-ghcr.outputs.image }}
-          tags: ${{ steps.build-image-ghcr.outputs.tags }}
+          image: ${{ steps.build-image.outputs.image }}
+          tags: ${{ steps.build-image.outputs.tags }}
           registry: ${{ env.IMAGE_REGISTRY_GHCR }}
           username: ${{ github.actor }}
           password: ${{ github.token }}
@@ -104,6 +138,7 @@ jobs:
       - name: Print image url (GHCR)
         run: echo "Image pushed to ${{ steps.push-to-ghcr.outputs.registry-paths }}"
 
+# Code coverage report
   Test-Report:
     runs-on: ubuntu-latest
     needs:
