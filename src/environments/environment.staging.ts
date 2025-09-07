@@ -9,7 +9,7 @@ export const environment = {
     state: "xyz"
   },
   api: {
-    baseURL: "https://energy-co-op-server-production.up.railway.app/api/v1",
+    baseURL: "https://energycoop-server.onrender.com/api/v1",
     energyMixURL: "https://api.carbonintensity.org.uk"
   }
 };
