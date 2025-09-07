@@ -24,7 +24,7 @@ RUN chown -R 755 /app/node_modules
 RUN chmod +x /app/node_modules/@esbuild/linux-x64/bin/esbuild
 
 # Build the project
-RUN npm run build --configuration=$ENV
+RUN npm run build -- --configuration=$ENV
 
 FROM nginx:stable-alpine3.21-perl
 
