@@ -8,7 +8,7 @@
   }
 
   <div class="pill-group">
-    @if (auth.isAuthenticated$ | async) {
+    @if (showGraigFathaLink) {
       <a
         class="pill"
         [routerLink]="['/stats', 'Graig Fatha']"
@@ -17,6 +17,7 @@
       >
         <span>Graig Fatha</span>
       </a>
+    }
 
 <!--      <a-->
 <!--        class="pill"-->
@@ -26,7 +27,6 @@
 <!--      >-->
 <!--        <span>Documents</span>-->
 <!--      </a>-->
-    }
 
     <app-auth-button></app-auth-button>
   </div>

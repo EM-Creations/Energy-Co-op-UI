@@ -73,6 +73,48 @@ describe('UserService', () => {
     });
   });
 
+  describe('hasPermission$', () => {
+    it('should return true if permission exists in claims', (done) => {
+      jest.spyOn(service, 'getDecodedAccessToken$').mockReturnValue(of({ permissions: ['perm1', 'perm2'] }));
+      service.hasPermission$('perm1').subscribe(result => {
+        expect(result).toBe(true);
+        done();
+      });
+    });
+
+    it('should return false if permission does not exist in claims', (done) => {
+      jest.spyOn(service, 'getDecodedAccessToken$').mockReturnValue(of({ permissions: ['perm2'] }));
+      service.hasPermission$('perm1').subscribe(result => {
+        expect(result).toBe(false);
+        done();
+      });
+    });
+
+    it('should return false if permissions is not an array', (done) => {
+      jest.spyOn(service, 'getDecodedAccessToken$').mockReturnValue(of({ permissions: 'not-an-array' }));
+      service.hasPermission$('perm1').subscribe(result => {
+        expect(result).toBe(false);
+        done();
+      });
+    });
+
+    it('should return false if claims is null', (done) => {
+      jest.spyOn(service, 'getDecodedAccessToken$').mockReturnValue(of(null));
+      service.hasPermission$('perm1').subscribe(result => {
+        expect(result).toBe(false);
+        done();
+      });
+    });
+
+    it('should return false if permissions is missing', (done) => {
+      jest.spyOn(service, 'getDecodedAccessToken$').mockReturnValue(of({}));
+      service.hasPermission$('perm1').subscribe(result => {
+        expect(result).toBe(false);
+        done();
+      });
+    });
+  });
+
   describe('retrieveUser', () => {
     it('should set user property', (done) => {
       service.retrieveUser();
@@ -85,6 +127,17 @@ describe('UserService', () => {
     it('should not set user property if not authenticated', (done) => {
       authServiceMock.isAuthenticated$ = false;
       service = TestBed.inject(UserService); // re-inject to use new mock value
+      service.retrieveUser();
+      setTimeout(() => {
+        expect(service['user']).toBeNull();
+        done();
+      }, 0);
+    });
+
+    it('should set user property to null if user$ emits null', (done) => {
+      authServiceMock.isAuthenticated$ = true;
+      authServiceMock.user$ = of(null);
+      service = TestBed.inject(UserService);
       service.retrieveUser();
       setTimeout(() => {
         expect(service['user']).toBeNull();

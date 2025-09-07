@@ -36,6 +36,20 @@ export class UserService {
     );
   }
 
+  /**
+   * Returns an Observable that emits true if the user has the specified permission.
+   */
+  hasPermission$(permission: string): Observable<boolean> {
+    return this.getDecodedAccessToken$().pipe(
+      map(claims => {
+        if (claims && Array.isArray(claims["permissions"])) {
+          return claims["permissions"].includes(permission);
+        }
+        return false;
+      })
+    );
+  }
+
   retrieveUser(): void {
     if (this.auth.isAuthenticated$) {
       this.auth.user$.subscribe(user => {
