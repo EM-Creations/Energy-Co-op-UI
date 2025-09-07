@@ -4,7 +4,7 @@ export const environment = {
     domain: "dev-energycoop.uk.auth0.com",
     clientId: "xN3rhmATd9PPs0I2bwzpdef2IUhaEQQo",
     audience: "http://localhost:8080/",
-    redirectUri: "https://energycoop-server.onrender.com",
+    redirectUri: "https://energycoop-ui.onrender.com",
     scope: "openid profile email",
     state: "xyz"
   },
