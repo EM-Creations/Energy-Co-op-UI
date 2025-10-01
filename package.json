@@ -60,7 +60,7 @@
     "@jest/globals": "^30.0.2",
     "@playwright/test": "^1.54.1",
     "@types/jest": "^30.0.0",
-    "angular-eslint": "20.2.0",
+    "angular-eslint": "20.3.0",
     "babel-loader": "^10.0.0",
     "babel-plugin-istanbul": "^7.0.0",
     "blob-polyfill": "^9.0.20240710",
