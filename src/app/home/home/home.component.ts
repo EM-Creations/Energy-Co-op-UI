@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {AuthService} from '@auth0/auth0-angular';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, DecimalPipe} from '@angular/common';
 import {UserService} from '../../service/user.service';
 import {EnergyMixService} from '../../service/energy-mix.service';
 import {ChartConfiguration} from 'chart.js';
@@ -13,6 +13,7 @@ import {BaseChartDirective} from 'ng2-charts';
     AsyncPipe,
     BaseChartDirective
   ],
+  providers: [DecimalPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -20,6 +21,7 @@ export class HomeComponent implements OnInit {
   auth = inject(AuthService);
   userService = inject(UserService);
   energyMixService = inject(EnergyMixService);
+  decimalPipe = inject(DecimalPipe);
 
   title = 'Energy Co-op UI';
 
@@ -40,6 +42,16 @@ export class HomeComponent implements OnInit {
       legend: {
         display: this.pieChartLegendEnabled,
         position: 'top'
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const percentage = context.parsed;
+            const percentageFormatted = this.decimalPipe.transform(percentage, '1.2-2');
+
+            return ` ${percentageFormatted}%`;
+          }
+        }
       },
       datalabels: {
         formatter: (value, context) => {
