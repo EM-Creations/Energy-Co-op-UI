@@ -11,17 +11,26 @@ describe('LeftNavComponent', () => {
   let mockAuthService: any;
   let mockUserService: any;
   let isAuthenticatedSubject: Subject<boolean>;
-  let hasPermissionSubject: Subject<boolean>;
+  let hasGraigFathaPermissionSubject: Subject<boolean>;
+  let hasAdminPermissionSubject: Subject<boolean>;
 
   beforeEach(async () => {
     isAuthenticatedSubject = new Subject<boolean>();
-    hasPermissionSubject = new Subject<boolean>();
+    hasGraigFathaPermissionSubject = new Subject<boolean>();
+    hasAdminPermissionSubject = new Subject<boolean>();
 
     mockAuthService = {
       isAuthenticated$: isAuthenticatedSubject.asObservable()
     };
     mockUserService = {
-      hasPermission$: jest.fn().mockReturnValue(hasPermissionSubject.asObservable())
+      hasPermission$: jest.fn().mockImplementation((permission: string) => {
+        if (permission === 'read:gf-stats-basic') {
+          return hasGraigFathaPermissionSubject.asObservable();
+        } else if (permission === 'read:admin') {
+          return hasAdminPermissionSubject.asObservable();
+        }
+        return new Subject<boolean>().asObservable();
+      })
     };
 
     await TestBed.configureTestingModule({
@@ -51,11 +60,18 @@ describe('LeftNavComponent', () => {
       expect(component.isAuthenticated).toBe(false);
     });
 
-    it('should set canViewGraigFatha when userService emits', () => {
-      hasPermissionSubject.next(true);
+    it('should set canViewGraigFatha when userService emits for gf-stats permission', () => {
+      hasGraigFathaPermissionSubject.next(true);
       expect(component.canViewGraigFatha).toBe(true);
-      hasPermissionSubject.next(false);
+      hasGraigFathaPermissionSubject.next(false);
       expect(component.canViewGraigFatha).toBe(false);
+    });
+
+    it('should set canAccessAdmin when userService emits for admin permission', () => {
+      hasAdminPermissionSubject.next(true);
+      expect(component.canAccessAdmin).toBe(true);
+      hasAdminPermissionSubject.next(false);
+      expect(component.canAccessAdmin).toBe(false);
     });
   });
 
@@ -76,6 +92,26 @@ describe('LeftNavComponent', () => {
       component.isAuthenticated = true;
       component.canViewGraigFatha = true;
       expect(component.showGraigFathaLink).toBe(true);
+    });
+  });
+
+  describe('showAdmin', () => {
+    it('should return true only if both isAuthenticated and canAccessAdmin are true', () => {
+      component.isAuthenticated = false;
+      component.canAccessAdmin = false;
+      expect(component.showAdmin).toBe(false);
+
+      component.isAuthenticated = true;
+      component.canAccessAdmin = false;
+      expect(component.showAdmin).toBe(false);
+
+      component.isAuthenticated = false;
+      component.canAccessAdmin = true;
+      expect(component.showAdmin).toBe(false);
+
+      component.isAuthenticated = true;
+      component.canAccessAdmin = true;
+      expect(component.showAdmin).toBe(true);
     });
   });
 });

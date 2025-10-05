@@ -1,10 +1,24 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {SiteInfo} from '../model/site-info';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {switchMap} from 'rxjs/operators';
+import {UserService} from './user.service';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SiteInfoService {
+  http = inject(HttpClient);
+  userService = inject(UserService);
+
+  private readonly baseURL: string;
+
+  constructor() {
+    this.baseURL = environment.api.baseURL;
+  }
+
   getSiteInfoFromName(siteName: string | null): SiteInfo {
     let siteInfo: SiteInfo;
 
@@ -42,4 +56,18 @@ export class SiteInfoService {
 
     return siteInfo;
   }
+
+  getSuppportedSites(): Observable<string[]> {
+    return this.userService.getAccessTokenSilently$().pipe(
+      switchMap(token => {
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        });
+        return this.http.get<string[]>(`${this.baseURL}/info/sites`, {headers});
+      })
+    );
+  }
+
 }

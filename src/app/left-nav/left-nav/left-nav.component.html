@@ -19,6 +19,17 @@
       </a>
     }
 
+    @if (showAdmin) {
+      <a
+        class="pill"
+        routerLink="/admin"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+      >
+        <span>Admin Area</span>
+      </a>
+    }
+
 <!--      <a-->
 <!--        class="pill"-->
 <!--        routerLink="/documents"-->

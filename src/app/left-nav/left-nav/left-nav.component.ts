@@ -23,9 +23,14 @@ export class LeftNavComponent implements OnInit {
   protected userService = inject(UserService);
   isAuthenticated = false;
   canViewGraigFatha = false;
+  canAccessAdmin = false;
 
   get showGraigFathaLink(): boolean {
     return this.isAuthenticated && this.canViewGraigFatha;
+  }
+
+  get showAdmin(): boolean {
+    return this.isAuthenticated && this.canAccessAdmin;
   }
 
   ngOnInit(): void {
@@ -34,6 +39,9 @@ export class LeftNavComponent implements OnInit {
     });
     this.userService.hasPermission$('read:gf-stats-basic').subscribe(hasPermission => {
       this.canViewGraigFatha = hasPermission;
+    });
+    this.userService.hasPermission$('read:admin').subscribe(hasPermission => {
+      this.canAccessAdmin = hasPermission;
     });
   }
 }
