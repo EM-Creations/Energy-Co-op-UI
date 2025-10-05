@@ -9,7 +9,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {CommonModule} from '@angular/common';
 import {AdminService} from '../../service/admin.service';
-import moment from 'moment/moment';
+import moment from 'moment';
 import {SavingsRateUpdate} from '../../model/SavingsRateUpdate';
 
 @Component({
