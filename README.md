@@ -59,7 +59,7 @@
 
 [![Energy Co-op UI Screen Shot](https://github.com/EM-Creations/Energy-Co-op-UI/blob/main/public/stats-page-demo.png)](https://github.com/EM-Creations/Energy-Co-op-UI)
 
-Energy Co-op UI is intended to be an Angular web application to facilitate the management of users accessing Energy Co-op information.
+Energy Co-op UI is intended to be an Angular web application to facilitate the management of users accessing Energy Co-op information. This application is designed to run in conjunction with the [Energy Co-op Server](https://github.com/EM-Creations/Energy-Co-op-Server).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
