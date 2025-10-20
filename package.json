@@ -58,7 +58,7 @@
     "@babel/preset-env": "^7.28.3",
     "@babel/preset-typescript": "^7.27.0",
     "@jest/globals": "^30.0.2",
-    "@playwright/test": "^1.54.1",
+    "@playwright/test": "^1.56.1",
     "@types/jest": "^30.0.0",
     "angular-eslint": "20.3.0",
     "babel-loader": "^10.0.0",
