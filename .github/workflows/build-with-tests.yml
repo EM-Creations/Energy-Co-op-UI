@@ -6,6 +6,10 @@ on:
       os:
         required: true
         type: string
+      run-tests:
+        required: true
+        type: boolean
+        default: true
 
 env:
   NODE_VERSION: "v22.14.0"
@@ -34,6 +38,7 @@ jobs:
         run: npm run lint
 
       - name: Test
+        if: ${{ inputs.run-tests }}
         run: npm run test
 
       - uses: actions/upload-artifact@v4
@@ -44,13 +49,15 @@ jobs:
           retention-days: 1
 
       - name: Install Playwright Browsers
+        if: ${{ inputs.run-tests }}
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
+        if: ${{ inputs.run-tests }}
         run: npm run e2e:ci
 
       - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && inputs.run-tests }}
         with:
           name: playwright-report-${{ inputs.os }}
           path: playwright-report/

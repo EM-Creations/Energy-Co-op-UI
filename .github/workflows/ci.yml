@@ -26,20 +26,23 @@ env:
   REGISTRY_PASSWORD: ${{ github.token }}
 
 jobs:
-  Build-With-Tests-Windows:
+  Build-Windows:
     uses: ./.github/workflows/build-with-tests.yml
     with:
       os: windows-latest
+      run-tests: false
 
   Build-With-Tests-Linux:
     uses: ./.github/workflows/build-with-tests.yml
     with:
       os: ubuntu-latest
+      run-tests: true
 
   Build-With-Tests-Mac:
     uses: ./.github/workflows/build-with-tests.yml
     with:
       os: macos-latest
+      run-tests: true
 
 # Staging OCI image
   OCI-Image-Staging:
@@ -142,7 +145,7 @@ jobs:
   Test-Report:
     runs-on: ubuntu-latest
     needs:
-      - Build-With-Tests-Windows
+      - Build-Windows
       - Build-With-Tests-Linux
       - Build-With-Tests-Mac
     permissions:
