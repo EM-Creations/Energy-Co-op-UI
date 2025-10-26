@@ -1,0 +1,68 @@
+.alerts-container {
+  padding: 20px;
+
+  h1 {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  .subtitle {
+    margin: 0 0 24px 0;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+  }
+
+  .table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+
+    mat-form-field {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .mat-mdc-table {
+    width: 100%;
+  }
+
+  .mat-mdc-row:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+
+  .mat-mdc-row:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  .mat-column-createdAt {
+    flex: 0 0 200px;
+  }
+
+  .mat-column-message {
+    flex: 1;
+  }
+
+  .no-data-row {
+    padding: 1rem;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .mat-mdc-header-cell {
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  .mat-mdc-cell {
+    padding: 8px;
+  }
+}
