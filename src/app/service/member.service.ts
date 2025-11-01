@@ -16,7 +16,13 @@ export class MemberService {
   userService = inject(UserService);
 
   private readonly baseURL: string;
-  private static defaultEnergySaving: EnergySaving = {amount: 0, currency: 'GBP', savingsRate: 0, from: new Date(), to: new Date()};
+  private static defaultEnergySaving: EnergySaving = {
+    amount: 0,
+    currency: 'GBP',
+    savingsRate: 0,
+    from: new Date(),
+    to: new Date()
+  };
 
   constructor() {
     this.baseURL = environment.api.baseURL;
@@ -61,6 +67,41 @@ export class MemberService {
         response.add(MemberService.defaultEnergySaving);
         return of(response);
       }
+    }
+  }
+
+  generateTaxDocument(site: SiteInfo | undefined, from: Date, to: Date): Observable<Blob> {
+    const fromStr = moment(from).format('YYYY-MM-DD');
+    const toStr = moment(to).format('YYYY-MM-DD');
+
+    console.log("Generating tax document for site:", site, "from:", fromStr, "to:", toStr);
+
+    if (site) {
+      switch (site.name) {
+        case "Graig Fatha":
+          return this.userService.getAccessTokenSilently$().pipe(
+            switchMap(token => {
+              const headers = new HttpHeaders({
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/pdf'
+              });
+              return this.http.get(`${this.baseURL}/graigFatha/member/tax-document/${fromStr}/${toStr}`, {
+                headers,
+                responseType: 'blob',
+                observe: 'response'
+              }).pipe(
+                switchMap(response => {
+                  return of(new Blob([response.body!], { type: 'application/pdf' }));
+                })
+              );
+            })
+          );
+        default: {
+          return of(new Blob());
+        }
+      }
+    } else {
+      return of(new Blob());
     }
   }
 }
