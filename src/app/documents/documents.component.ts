@@ -31,7 +31,7 @@ export class DocumentsComponent implements OnInit {
   ngOnInit(): void {
     this.generateTaxYears();
 
-    this.siteInfoService.getSuppportedSites().subscribe(
+    this.siteInfoService.getOwnedSites().subscribe(
       (siteNames: string[]) => {
         this.siteNames = siteNames;
       },

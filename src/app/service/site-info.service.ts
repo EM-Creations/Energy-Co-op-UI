@@ -73,4 +73,17 @@ export class SiteInfoService {
     );
   }
 
+  getOwnedSites(): Observable<string[]> {
+    return this.userService.getAccessTokenSilently$().pipe(
+      switchMap(token => {
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        });
+        return this.http.get<string[]>(`${this.baseURL}/info/sites-owned`, {headers});
+      })
+    );
+  }
+
 }

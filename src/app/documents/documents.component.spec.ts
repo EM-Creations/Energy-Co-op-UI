@@ -21,7 +21,7 @@ describe('DocumentsComponent', () => {
 
   beforeEach(async () => {
     siteInfoService = {
-      getSuppportedSites: jest.fn().mockReturnValue(of(mockSiteNames)),
+      getOwnedSites: jest.fn().mockReturnValue(of(mockSiteNames)),
       getSiteInfoFromName: jest.fn().mockReturnValue(mockSiteInfo)
     };
 
@@ -54,7 +54,7 @@ describe('DocumentsComponent', () => {
 
   describe('Site Loading', () => {
     it('should load sites on init', () => {
-      expect(siteInfoService.getSuppportedSites).toHaveBeenCalled();
+      expect(siteInfoService.getOwnedSites).toHaveBeenCalled();
       expect(component.siteNames).toEqual(mockSiteNames);
     });
   });

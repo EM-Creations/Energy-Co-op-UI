@@ -25,7 +25,7 @@ describe('DirectorAlertsComponent', () => {
 
   beforeEach(async () => {
     mockSiteInfoService = {
-      getSuppportedSites: jest.fn().mockReturnValue(of(mockSites))
+      getOwnedSites: jest.fn().mockReturnValue(of(mockSites))
     } as any;
 
     mockAlertsService = {
@@ -58,7 +58,7 @@ describe('DirectorAlertsComponent', () => {
   });
 
   it('should load sites on init', () => {
-    expect(mockSiteInfoService.getSuppportedSites).toHaveBeenCalled();
+    expect(mockSiteInfoService.getOwnedSites).toHaveBeenCalled();
     // Access protected sites through the template
     const tabLabels = fixture.debugElement.queryAll(By.css('mat-tab')).map(el => el.attributes['label']);
     setTimeout(() => {
@@ -78,7 +78,7 @@ describe('DirectorAlertsComponent', () => {
 
   it('should handle errors when loading sites', () => {
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-    mockSiteInfoService.getSuppportedSites.mockReturnValue(throwError(() => new Error('Test error')));
+    mockSiteInfoService.getOwnedSites.mockReturnValue(throwError(() => new Error('Test error')));
 
     component.ngOnInit();
 

@@ -45,10 +45,10 @@ export class DirectorAlertsComponent implements OnInit {
   }
 
   private loadSites(): void {
-    this.siteInfoService.getSuppportedSites().subscribe({
+    this.siteInfoService.getOwnedSites().subscribe({
       next: async (sites: string[]) => {
         this.sites = sites;
-        await this.loadAlertsForAllSites();
+        await this.loadAlertsForOwnedSites();
       },
       error: (error) => {
         console.error('Error loading sites:', error);
@@ -57,7 +57,7 @@ export class DirectorAlertsComponent implements OnInit {
     });
   }
 
-  private async loadAlertsForAllSites(): Promise<void> {
+  private async loadAlertsForOwnedSites(): Promise<void> {
     try {
       for (const site of this.sites) {
         const alerts = await firstValueFrom(this.alertsService.getAlerts(site));

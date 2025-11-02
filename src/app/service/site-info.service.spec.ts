@@ -116,4 +116,54 @@ describe('SiteInfoService', () => {
       });
     });
   });
+
+  describe('getOwnedSites', () => {
+    const mockToken = 'mock-token';
+    const mockOwnedSites = ['Graig Fatha', 'Kirk Hill'];
+
+    beforeEach(() => {
+      mockUserService.getAccessTokenSilently$.mockReturnValue(of(mockToken));
+      mockHttp.get.mockReturnValue(of(mockOwnedSites));
+    });
+
+    it('should get auth token and make HTTP request with correct headers', (done) => {
+      service.getOwnedSites().subscribe(result => {
+        expect(mockUserService.getAccessTokenSilently$).toHaveBeenCalled();
+        expect(mockHttp.get).toHaveBeenCalledWith(
+          `${service['baseURL']}/info/sites-owned`,
+          expect.objectContaining({
+            headers: expect.any(Object)
+          })
+        );
+        expect(result).toEqual(mockOwnedSites);
+        done();
+      });
+    });
+
+    it('should pass through the error if HTTP request fails', (done) => {
+      const mockError = new Error('HTTP error');
+      mockHttp.get.mockReturnValue(throwError(() => mockError));
+
+      service.getOwnedSites().subscribe({
+        next: () => done.fail('Should have errored'),
+        error: (error) => {
+          expect(error).toBe(mockError);
+          done();
+        }
+      });
+    });
+
+    it('should pass through the error if token acquisition fails', (done) => {
+      const mockError = new Error('Token error');
+      mockUserService.getAccessTokenSilently$.mockReturnValue(throwError(() => mockError));
+
+      service.getOwnedSites().subscribe({
+        next: () => done.fail('Should have errored'),
+        error: (error) => {
+          expect(error).toBe(mockError);
+          done();
+        }
+      });
+    });
+  });
 });
