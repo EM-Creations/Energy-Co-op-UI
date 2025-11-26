@@ -68,18 +68,19 @@ jobs:
           build-args: |
             ENV=staging
 
-      - name: Push to Docker Hub
-        id: push-to-dockerhub
-        uses: redhat-actions/push-to-registry@v2
-        with:
-          image: ${{ steps.build-image.outputs.image }}
-          tags: ${{ steps.build-image.outputs.tags }}
-          registry: ${{ env.IMAGE_REGISTRY_DOCKERHUB }}
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-      - name: Print image url (DOCKERHUB)
-        run: echo "Image pushed to ${{ steps.push-to-dockerhub.outputs.registry-paths }}"
+# Temporarily disabled while we sort out credentials, may be moved to a separate task ran by a user with their credentials
+#      - name: Push to Docker Hub
+#        id: push-to-dockerhub
+#        uses: redhat-actions/push-to-registry@v2
+#        with:
+#          image: ${{ steps.build-image.outputs.image }}
+#          tags: ${{ steps.build-image.outputs.tags }}
+#          registry: ${{ env.IMAGE_REGISTRY_DOCKERHUB }}
+#          username: ${{ secrets.DOCKERHUB_USER }}
+#          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+#
+#      - name: Print image url (DOCKERHUB)
+#        run: echo "Image pushed to ${{ steps.push-to-dockerhub.outputs.registry-paths }}"
 
 # Production OCI image
   OCI-Image:
@@ -107,19 +108,20 @@ jobs:
           build-args: |
             ENV=production
 
-# Push to Docker Hub Registry
-      - name: Push to Docker Hub
-        id: push-to-dockerhub
-        uses: redhat-actions/push-to-registry@v2
-        with:
-          image: ${{ steps.build-image.outputs.image }}
-          tags: ${{ steps.build-image.outputs.tags }}
-          registry: ${{ env.IMAGE_REGISTRY_DOCKERHUB }}
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-      - name: Print image url (DOCKERHUB)
-        run: echo "Image pushed to ${{ steps.push-to-dockerhub.outputs.registry-paths }}"
+# Temporarily disabled while we sort out credentials, may be moved to a separate task ran by a user with their credentials
+## Push to Docker Hub Registry
+#      - name: Push to Docker Hub
+#        id: push-to-dockerhub
+#        uses: redhat-actions/push-to-registry@v2
+#        with:
+#          image: ${{ steps.build-image.outputs.image }}
+#          tags: ${{ steps.build-image.outputs.tags }}
+#          registry: ${{ env.IMAGE_REGISTRY_DOCKERHUB }}
+#          username: ${{ secrets.DOCKERHUB_USER }}
+#          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+#
+#      - name: Print image url (DOCKERHUB)
+#        run: echo "Image pushed to ${{ steps.push-to-dockerhub.outputs.registry-paths }}"
 
 # Push to GitHub Container Registry
       - name: downcase IMAGE_REGISTRY_GHCR
