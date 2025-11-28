@@ -1,0 +1,111 @@
+name: Docker Hub Build
+run-name: Docker Hub build by ${{ github.actor }} 🚀
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Docker Hub Build'
+
+permissions:
+  actions: read
+  checks: write
+  contents: read
+  issues: read
+  packages: write
+  pull-requests: write
+  statuses: read
+  security-events: write
+
+env:
+  IMAGE_NAME: energycoop-ui
+  IMAGE_TAGS: v1 latest ${{ github.sha }}
+  IMAGE_TAGS_STAGING: staging ${{ github.sha }}-staging
+  IMAGE_REGISTRY_DOCKERHUB: docker.io/statusred
+  REGISTRY_USER: ${{ github.actor }}
+  REGISTRY_PASSWORD: ${{ github.token }}
+
+jobs:
+  Build-With-Tests-Linux:
+    uses: ./.github/workflows/build-with-tests.yml
+    with:
+      os: ubuntu-latest
+      run-tests: true
+
+  # Staging OCI image
+  OCI-Image-Staging:
+    runs-on: ubuntu-latest
+    needs:
+      - Build-With-Tests-Linux
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-${{ github.sha }}-ubuntu-latest
+          path: ./
+
+      # Build image and push to registry
+      - name: Buildah Action (Staging)
+        id: build-image-staging
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: ${{ env.IMAGE_NAME }}
+          tags: ${{ env.IMAGE_TAGS_STAGING }}
+          oci: true
+          containerfiles: |
+            ./Containerfile
+          build-args: |
+            ENV=staging
+
+      - name: Push to Docker Hub
+        id: push-to-dockerhub
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-image-staging.outputs.image }}
+          tags: ${{ steps.build-image-staging.outputs.tags }}
+          registry: ${{ env.IMAGE_REGISTRY_DOCKERHUB }}
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Print image url (DOCKERHUB)
+        run: echo "Image pushed to ${{ steps.push-to-dockerhub.outputs.registry-paths }}"
+
+  # Production OCI image
+  OCI-Image:
+    runs-on: ubuntu-latest
+    needs:
+      - OCI-Image-Staging
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-${{ github.sha }}-ubuntu-latest
+          path: ./
+
+      # Build image
+      - name: Buildah Action (DockerHub)
+        id: build-image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: ${{ env.IMAGE_NAME }}
+          tags: ${{ env.IMAGE_TAGS }}
+          oci: true
+          containerfiles: |
+            ./Containerfile
+          build-args: |
+            ENV=production
+
+# Push to Docker Hub Registry
+      - name: Push to Docker Hub
+        id: push-to-dockerhub
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-image.outputs.image }}
+          tags: ${{ steps.build-image.outputs.tags }}
+          registry: ${{ env.IMAGE_REGISTRY_DOCKERHUB }}
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Print image url (DOCKERHUB)
+        run: echo "Image pushed to ${{ steps.push-to-dockerhub.outputs.registry-paths }}"
